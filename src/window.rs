@@ -298,59 +298,26 @@ impl Window {
     pub fn add_folder_to_queue(&self, folder: &gio::File) {
         debug!("Adding the contents of {} to the queue", folder.uri());
 
-        let mut enumerator = folder
-            .enumerate_children(
-                "standard::*",
-                gio::FileQueryInfoFlags::NONE,
-                None::<&gio::Cancellable>,
-            )
-            .expect("Unable to enumerate");
+        let mut files = utils::load_files_from_folder(folder, false).into_iter();
+        glib::idle_add_local(clone!(@strong self as win => move || {
+            let queue = win.imp().player.queue();
 
-        let mut files = Vec::new();
-        while let Some(info) = enumerator.next().and_then(|s| s.ok()) {
-            if info.file_type() != gio::FileType::Regular {
-                continue;
-            }
-
-            if let Some(content_type) = info.content_type() {
-                if gio::content_type_is_a(&content_type, "audio/*") {
-                    let child = enumerator.child(&info);
-                    debug!("Adding {} to the queue", child.uri());
-                    files.push(child.clone());
-                }
-            }
-        }
-
-        // gio::FileEnumerator has no guaranteed order, so we should
-        // rely on the basename being formatted in a way that gives us an
-        // implicit order; if anything, this will queue songs in the same
-        // order in which they appear in the directory when browsing its
-        // contents
-        files.sort_by(|a, b| {
-            a.basename()
-                .unwrap()
-                .partial_cmp(&b.basename().unwrap())
-                .unwrap()
-        });
-
-        let songs: Vec<Song> = files
-            .iter()
-            .map(|f| Song::new(f.uri().as_str()))
-            .filter(|s| !s.equals(&Song::default()))
-            .collect();
-
-        let queue = self.imp().player.queue();
-        let n_songs = queue.n_songs();
-
-        if !songs.is_empty() {
-            queue.add_songs(&songs);
-
-            // If we just imported a bunch of songs, let's
-            // select the first song
-            if n_songs == 0 {
-                self.imp().player.skip_next();
-            }
-        }
+            files.next()
+                .map(|f| {
+                    let s = Song::new(f.uri().as_str());
+                    if !s.equals(&Song::default()) {
+                        let was_empty = queue.is_empty();
+                        queue.add_song(&s);
+                        if was_empty {
+                            win.imp().player.skip_to(0);
+                        }
+                    }
+                })
+                .map(|_| glib::Continue(true))
+                .unwrap_or_else(|| {
+                    glib::Continue(false)
+                })
+        }));
     }
 
     // Bind the PlayerState to the UI

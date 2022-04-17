@@ -6,7 +6,7 @@
 use color_thief::{get_palette, ColorFormat};
 use gtk::{gdk, gio, glib, prelude::*};
 
-use crate::config::APPLICATION_ID;
+use crate::{audio::Song, config::APPLICATION_ID};
 
 pub fn settings_manager() -> gio::Settings {
     // We ship a single schema for both default and development profiles
@@ -79,4 +79,70 @@ pub fn load_dominant_color(texture: &gdk::Texture) -> Option<gdk::RGBA> {
     }
 
     None
+}
+
+pub fn load_files_from_folder(folder: &gio::File, recursive: bool) -> Vec<gio::File> {
+    let mut enumerator = folder
+        .enumerate_children(
+            "standard::*",
+            gio::FileQueryInfoFlags::NONE,
+            None::<&gio::Cancellable>,
+        )
+        .expect("Unable to enumerate");
+
+    let mut files = Vec::new();
+    while let Some(info) = enumerator.next().and_then(|s| s.ok()) {
+        let child = enumerator.child(&info);
+        if recursive && info.file_type() == gio::FileType::Directory {
+            let mut res = load_files_from_folder(&child, recursive);
+            files.append(&mut res);
+        } else if info.file_type() == gio::FileType::Regular {
+            if let Some(content_type) = info.content_type() {
+                if gio::content_type_is_a(&content_type, "audio/*") {
+                    let child = enumerator.child(&info);
+                    debug!("Adding {} to the queue", child.uri());
+                    files.push(child.clone());
+                }
+            }
+        }
+    }
+
+    // gio::FileEnumerator has no guaranteed order, so we should
+    // rely on the basename being formatted in a way that gives us an
+    // implicit order; if anything, this will queue songs in the same
+    // order in which they appear in the directory when browsing its
+    // contents
+    files.sort_by(|a, b| {
+        let parent_a = a.parent().unwrap();
+        let parent_b = b.parent().unwrap();
+        let parent_basename_a = parent_a.basename().unwrap();
+        let parent_basename_b = parent_b.basename().unwrap();
+        let basename_a = a.basename().unwrap();
+        let basename_b = b.basename().unwrap();
+        let key_a = format!(
+            "{}-{}",
+            parent_basename_a.to_string_lossy(),
+            basename_a.to_string_lossy()
+        );
+        let key_b = format!(
+            "{}-{}",
+            parent_basename_b.to_string_lossy(),
+            basename_b.to_string_lossy()
+        );
+        key_a.partial_cmp(&key_b).unwrap()
+    });
+
+    files
+}
+
+pub fn load_songs_from_folder(folder: &gio::File) -> Vec<Song> {
+    let files = load_files_from_folder(folder, false);
+
+    let songs: Vec<Song> = files
+        .iter()
+        .map(|f| Song::new(f.uri().as_str()))
+        .filter(|s| !s.equals(&Song::default()))
+        .collect();
+
+    songs
 }
