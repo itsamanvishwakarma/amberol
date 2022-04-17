@@ -49,6 +49,14 @@ queuerow label.song-artist {
   font-size: 85%;
 }
 
+queuerow picture.cover {
+  min-width: 48px;
+  min-height: 48px;
+  box-shadow: initial;
+  border-radius: 2px;
+  margin: 0px;
+}
+
 dragoverlay {
   box-shadow: none;
 }

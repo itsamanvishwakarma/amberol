@@ -572,6 +572,10 @@ impl Window {
                 .bind(&row, "song-title", gtk::Widget::NONE);
             list_item
                 .property_expression("item")
+                .chain_property::<Song>("cover")
+                .bind(&row, "song-cover", gtk::Widget::NONE);
+            list_item
+                .property_expression("item")
                 .chain_property::<Song>("playing")
                 .bind(&row, "playing", gtk::Widget::NONE);
         });

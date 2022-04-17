@@ -9,8 +9,14 @@
       </object>
     </child>
     <child>
+      <object class="AmberolCoverPicture" id="song_cover_image">
+        <property name="cover-size">1</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkBox" id="queue_box">
         <property name="orientation">vertical</property>
+        <property name="valign">center</property>
         <property name="spacing">3</property>
         <child>
           <object class="GtkLabel" id="song_title_label">

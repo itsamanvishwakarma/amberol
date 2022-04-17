@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 use adw::subclass::prelude::*;
-use glib::{ParamFlags, ParamSpec, ParamSpecBoolean, ParamSpecString, Value};
-use gtk::{gio, glib, prelude::*, subclass::prelude::*, CompositeTemplate};
+use glib::{ParamFlags, ParamSpec, ParamSpecBoolean, ParamSpecObject, ParamSpecString, Value};
+use gtk::{gdk, gio, glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 use once_cell::sync::Lazy;
+
+use crate::cover_picture::CoverPicture;
 
 mod imp {
     use super::*;
@@ -15,6 +17,8 @@ mod imp {
         // Template widgets
         #[template_child]
         pub playing_image: TemplateChild<gtk::Image>,
+        #[template_child]
+        pub song_cover_image: TemplateChild<CoverPicture>,
         #[template_child]
         pub queue_box: TemplateChild<gtk::Box>,
         #[template_child]
@@ -52,6 +56,13 @@ mod imp {
                 vec![
                     ParamSpecString::new("song-artist", "", "", None, ParamFlags::READWRITE),
                     ParamSpecString::new("song-title", "", "", None, ParamFlags::READWRITE),
+                    ParamSpecObject::new(
+                        "song-cover",
+                        "",
+                        "",
+                        gdk::Texture::static_type(),
+                        ParamFlags::READWRITE,
+                    ),
                     ParamSpecBoolean::new("playing", "", "", false, ParamFlags::READWRITE),
                 ]
             });
@@ -67,6 +78,10 @@ mod imp {
                 "song-title" => {
                     let p = value.get::<&str>().expect("The value needs to be a string");
                     self.song_title_label.set_label(p);
+                }
+                "song-cover" => {
+                    let p = value.get::<gdk::Texture>().ok();
+                    self.song_cover_image.set_cover(p.as_ref());
                 }
                 "playing" => {
                     let p = value
@@ -86,6 +101,7 @@ mod imp {
             match pspec.name() {
                 "song-artist" => self.song_artist_label.label().to_value(),
                 "song-title" => self.song_title_label.label().to_value(),
+                "song-cover" => self.song_cover_image.cover().to_value(),
                 "playing" => self.playing_image.is_visible().to_value(),
                 _ => unimplemented!(),
             }
