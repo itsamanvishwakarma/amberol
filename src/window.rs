@@ -32,6 +32,8 @@ mod imp {
         #[template_child]
         pub drag_overlay: TemplateChild<DragOverlay>,
         #[template_child]
+        pub back_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub main_stack: TemplateChild<gtk::Stack>,
         #[template_child]
         pub status_page: TemplateChild<adw::StatusPage>,
@@ -40,11 +42,13 @@ mod imp {
         #[template_child]
         pub playback_control: TemplateChild<PlaybackControl>,
         #[template_child]
-        pub queue_revealer: TemplateChild<gtk::Revealer>,
+        pub queue_revealer: TemplateChild<adw::Flap>,
         #[template_child]
         pub queue_view: TemplateChild<gtk::ListView>,
         #[template_child]
         pub queue_length_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        pub playlist_box: TemplateChild<gtk::Box>,
 
         pub player: Rc<AudioPlayer>,
         pub provider: gtk::CssProvider,
@@ -119,6 +123,8 @@ mod imp {
                 playback_control: TemplateChild::default(),
                 main_stack: TemplateChild::default(),
                 status_page: TemplateChild::default(),
+                back_button: TemplateChild::default(),
+                playlist_box: TemplateChild::default(),
                 player: AudioPlayer::new(sender),
                 provider: gtk::CssProvider::new(),
                 receiver,
@@ -186,7 +192,7 @@ impl Window {
         // let width = settings.int("window-width");
         // let height = settings.int("window-height");
         // self.set_default_size(width, height);
-        self.set_default_size(400, -1);
+        self.set_default_size(600, -1);
     }
 
     fn clear_queue(&self) {
@@ -194,12 +200,18 @@ impl Window {
         player.stop();
         player.state().set_current_song(None);
         player.queue().clear();
-        self.imp().queue_revealer.set_reveal_child(false);
+        self.imp().queue_revealer.set_reveal_flap(false);
     }
 
     fn toggle_queue(&self) {
-        let visible = self.imp().queue_revealer.reveals_child();
-        self.imp().queue_revealer.set_reveal_child(!visible);
+        let visible = !self.imp().queue_revealer.reveals_flap();
+        let folded = self.imp().queue_revealer.is_folded();
+        self.imp().queue_revealer.set_reveal_flap(visible);
+        if visible && folded {
+            self.imp().back_button.set_visible(true);
+        } else {
+            self.imp().back_button.set_visible(false);
+        }
     }
 
     fn add_song(&self) {
@@ -455,10 +467,6 @@ impl Window {
                 }
 
                 win.update_playlist_time();
-
-                if queue.n_songs() > 1 {
-                    win.imp().queue_revealer.set_reveal_child(true);
-                }
             }),
         );
         queue.connect_notify_local(
@@ -493,10 +501,25 @@ impl Window {
 
     fn connect_signals(&self) {
         self.imp().queue_revealer.connect_notify_local(
-            Some("child-revealed"),
-            clone!(@weak self as win => move |_, _| {
-                let height = win.default_size().1;
-                win.set_default_size(-1, height);
+            Some("folded"),
+            clone!(@weak self as win => move |flap, _| {
+                if flap.is_folded() {
+                    win.imp().back_button.set_visible(flap.reveals_flap());
+                }
+            }),
+        );
+
+        self.imp().queue_revealer.connect_notify_local(
+            Some("reveal-flap"),
+            clone!(@weak self as win => move |flap, _| {
+                let folded = flap.is_folded();
+                if folded {
+                    if flap.reveals_flap() {
+                        win.imp().playlist_box.add_css_class("playlist-background");
+                    } else {
+                        win.imp().playlist_box.remove_css_class("playlist-background");
+                    }
+                }
             }),
         );
 

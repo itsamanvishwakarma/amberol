@@ -13,6 +13,8 @@ button.large {
   /* match title-1 */
   font-size: 15pt;
   font-weight: 800;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 picture.cover {
@@ -69,6 +71,19 @@ window.main-window {
   transition-property: background, color;
   transition-duration: 250ms;
   transition-timing-function: ease;
+}
+
+:not(.main-window) .playlist-background {
+  background-color: @window_bg_color;
+  color: @window_fg_color;
+}
+
+.main-window .playlist-background {
+  background: linear-gradient(127deg, alpha(@background_color_1, 0.70), @background_color_1 70.1%),
+              linear-gradient(217deg, alpha(@background_color_3, 0.70), @background_color_3 70.1%),
+              /* background_color_2 is used to determine foreground_color */
+              linear-gradient(336deg, alpha(@background_color_2, 0.70), @background_color_2 70.1%);
+  color: @foreground_color;
 }
 
 .main-window popover arrow,
