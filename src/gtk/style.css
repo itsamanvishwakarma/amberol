@@ -5,6 +5,8 @@ button.large {
 
 .main-box {
   padding: 6px;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 
 .song-title {
