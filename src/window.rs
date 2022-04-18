@@ -495,8 +495,8 @@ impl Window {
         self.imp().queue_revealer.connect_notify_local(
             Some("child-revealed"),
             clone!(@weak self as win => move |_, _| {
-                let width = win.default_size().0;
-                win.set_default_size(width, -1);
+                let height = win.default_size().1;
+                win.set_default_size(-1, height);
             }),
         );
 
