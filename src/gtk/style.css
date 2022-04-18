@@ -35,7 +35,12 @@ songdetails image.no-cover {
   margin: 6px;
 }
 
-queuerow {
+queuerow .currently-playing {
+  padding-left: 6px;
+  font-weight: 700;
+}
+
+queuerow box.song-details {
   padding: 6px;
   border-spacing: 21px;
 }
