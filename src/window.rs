@@ -113,6 +113,7 @@ mod imp {
                 debug!("Window::queue.toggle()");
                 win.toggle_queue();
             });
+            klass.install_property_action("queue.shuffle", "playlist-shuffled");
         }
 
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
@@ -492,7 +493,7 @@ impl Window {
                     win.imp().main_stack.get().set_visible_child_name("main-view");
 
                     win.action_set_enabled("queue.toggle", queue.n_songs() > 1);
-                    win.imp().playback_control.get().shuffle_button().set_sensitive(queue.n_songs() > 1);
+                    win.action_set_enabled("queue.shuffle", queue.n_songs() > 1);
 
                     win.action_set_enabled("win.play", true);
                     win.action_set_enabled("win.seek-backwards", true);
@@ -562,11 +563,6 @@ impl Window {
             }),
         );
 
-        let shuffle_button = self.imp().playback_control.shuffle_button();
-        shuffle_button.connect_toggled(clone!(@weak self as win => move |toggle_button| {
-            win.set_playlist_shuffled(toggle_button.is_active());
-        }));
-
         let volume_control = self.imp().playback_control.volume_control();
         volume_control.connect_notify_local(
             Some("volume"),
@@ -600,14 +596,9 @@ impl Window {
         self.action_set_enabled("win.next", false);
         self.action_set_enabled("win.seek-backwards", false);
         self.action_set_enabled("win.seek-forward", false);
-        self.action_set_enabled("queue.toggle", false);
 
-        // Not an action, so we need direct access to the widget
-        self.imp()
-            .playback_control
-            .get()
-            .shuffle_button()
-            .set_sensitive(false);
+        self.action_set_enabled("queue.toggle", false);
+        self.action_set_enabled("queue.shuffle", false);
 
         // Manually update the icon on the initial empty state
         // to avoid generating the UI definition file at build

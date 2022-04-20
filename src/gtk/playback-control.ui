@@ -107,6 +107,7 @@
               <child>
                 <object class="GtkToggleButton" id="shuffle_button">
                   <property name="icon-name">media-playlist-shuffle-symbolic</property>
+                  <property name="action-name">queue.shuffle</property>
                   <property name="valign">center</property>
                   <property name="tooltip-text" translatable="yes">Shuffle the playlist</property>
                   <style>
