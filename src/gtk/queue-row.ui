@@ -18,6 +18,8 @@
                           <object class="GtkImage">
                             <property name="icon-name">folder-music-symbolic</property>
                             <property name="pixel-size">24</property>
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
                             <style>
                               <class name="dim-label"/>
                               <class name="card"/>
@@ -32,6 +34,8 @@
                         <property name="child">
                           <object class="AmberolCoverPicture" id="song_cover_image">
                             <property name="cover-size">1</property>
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
                           </object>
                         </property>
                       </object>
@@ -71,7 +75,7 @@
                     <property name="spacing">2</property>
                     <property name="visible">0</property>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkBox" id="move_controls_box">
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="orientation">vertical</property>

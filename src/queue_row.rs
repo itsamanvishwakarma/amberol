@@ -4,15 +4,15 @@
 use std::cell::RefCell;
 
 use adw::subclass::prelude::*;
-use glib::{
-    clone, ParamFlags, ParamSpec, ParamSpecBoolean, ParamSpecObject, ParamSpecString, Value,
-};
+use glib::clone;
 use gtk::{gdk, gio, glib, prelude::*, subclass::prelude::*, CompositeTemplate};
-use once_cell::sync::Lazy;
 
 use crate::{audio::Song, cover_picture::CoverPicture, window::Window};
 
 mod imp {
+    use glib::{ParamFlags, ParamSpec, ParamSpecBoolean, ParamSpecObject, ParamSpecString, Value};
+    use once_cell::sync::Lazy;
+
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate)]
@@ -31,6 +31,8 @@ mod imp {
         pub song_artist_label: TemplateChild<gtk::Label>,
         #[template_child]
         pub controls_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub move_controls_box: TemplateChild<gtk::Box>,
         #[template_child]
         pub move_up_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -91,6 +93,7 @@ mod imp {
                         ParamFlags::READWRITE,
                     ),
                     ParamSpecBoolean::new("playing", "", "", false, ParamFlags::READWRITE),
+                    ParamSpecBoolean::new("move-controls", "", "", true, ParamFlags::READWRITE),
                 ]
             });
             PROPERTIES.as_ref()
@@ -129,6 +132,13 @@ mod imp {
                     } else {
                         self.row_stack.set_visible_child_name("song-details");
                     }
+                }
+                "move-controls" => {
+                    let p = value
+                        .get::<bool>()
+                        .expect("The value needs to be a boolean");
+                    debug!("Move controls for queue row visible: {}", p);
+                    self.move_controls_box.set_visible(p);
                 }
                 _ => unimplemented!(),
             }

@@ -1,7 +1,10 @@
 // SPDX-FileCopyrightText: 2022  Emmanuele Bassi
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use std::{cell::RefCell, rc::Rc};
+use std::{
+    cell::{Cell, RefCell},
+    rc::Rc,
+};
 
 use adw::subclass::prelude::*;
 use glib::{clone, Receiver};
@@ -23,6 +26,9 @@ pub enum WindowAction {
 }
 
 mod imp {
+    use glib::{ParamFlags, ParamSpec, ParamSpecBoolean, Value};
+    use once_cell::sync::Lazy;
+
     use super::*;
 
     #[derive(CompositeTemplate)]
@@ -53,6 +59,9 @@ mod imp {
         pub player: Rc<AudioPlayer>,
         pub provider: gtk::CssProvider,
         pub receiver: RefCell<Option<Receiver<WindowAction>>>,
+
+        pub playlist_shuffled: Cell<bool>,
+        pub playlist_visible: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -128,6 +137,8 @@ mod imp {
                 player: AudioPlayer::new(sender),
                 provider: gtk::CssProvider::new(),
                 receiver,
+                playlist_shuffled: Cell::new(false),
+                playlist_visible: Cell::new(false),
             }
         }
     }
@@ -149,6 +160,38 @@ mod imp {
             obj.setup_drop_target();
             obj.setup_provider();
             obj.restore_window_state();
+        }
+
+        fn properties() -> &'static [ParamSpec] {
+            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
+                vec![
+                    ParamSpecBoolean::new(
+                        "playlist-shuffled",
+                        "",
+                        "",
+                        false,
+                        ParamFlags::READWRITE,
+                    ),
+                    ParamSpecBoolean::new("playlist-visible", "", "", false, ParamFlags::READWRITE),
+                ]
+            });
+            PROPERTIES.as_ref()
+        }
+
+        fn set_property(&self, obj: &Self::Type, _id: usize, value: &Value, pspec: &ParamSpec) {
+            match pspec.name() {
+                "playlist-shuffled" => obj.set_playlist_shuffled(value.get::<bool>().unwrap()),
+                "playlist-visible" => obj.set_playlist_visible(value.get::<bool>().unwrap()),
+                _ => unimplemented!(),
+            }
+        }
+
+        fn property(&self, obj: &Self::Type, _id: usize, pspec: &ParamSpec) -> Value {
+            match pspec.name() {
+                "playlist-shuffled" => obj.playlist_shuffled().to_value(),
+                "playlist-visible" => obj.playlist_visible().to_value(),
+                _ => unimplemented!(),
+            }
         }
     }
 
@@ -204,13 +247,37 @@ impl Window {
     }
 
     fn toggle_queue(&self) {
-        let visible = !self.imp().queue_revealer.reveals_flap();
+        let visible = !self.playlist_visible();
+        self.set_playlist_visible(visible);
+
         let folded = self.imp().queue_revealer.is_folded();
-        self.imp().queue_revealer.set_reveal_flap(visible);
         if visible && folded {
             self.imp().back_button.set_visible(true);
         } else {
             self.imp().back_button.set_visible(false);
+        }
+    }
+
+    fn playlist_visible(&self) -> bool {
+        self.imp().playlist_visible.get()
+    }
+
+    fn set_playlist_visible(&self, visible: bool) {
+        if visible != self.imp().playlist_visible.replace(visible) {
+            self.imp().queue_revealer.set_reveal_flap(visible);
+            self.notify("playlist-visible");
+        }
+    }
+
+    fn playlist_shuffled(&self) -> bool {
+        self.imp().playlist_shuffled.get()
+    }
+
+    fn set_playlist_shuffled(&self, shuffled: bool) {
+        if shuffled != self.imp().playlist_shuffled.replace(shuffled) {
+            let queue = self.imp().player.queue();
+            queue.set_shuffle(shuffled);
+            self.notify("playlist-shuffled");
         }
     }
 
@@ -497,8 +564,7 @@ impl Window {
 
         let shuffle_button = self.imp().playback_control.shuffle_button();
         shuffle_button.connect_toggled(clone!(@weak self as win => move |toggle_button| {
-            let queue = win.imp().player.queue();
-            queue.set_shuffle(toggle_button.is_active());
+            win.set_playlist_shuffled(toggle_button.is_active());
         }));
 
         let volume_control = self.imp().playback_control.volume_control();
@@ -553,15 +619,25 @@ impl Window {
         let imp = self.imp();
 
         let factory = gtk::SignalListItemFactory::new();
-        factory.connect_setup(move |_, list_item| {
+        factory.connect_setup(clone!(@strong self as win => move |_, list_item| {
             let row = QueueRow::default();
             list_item.set_child(Some(&row));
 
+            // Do not show the move controls if the list is shuffled
+            win
+                .bind_property("playlist-shuffled", &row, "move-controls")
+                .flags(glib::BindingFlags::INVERT_BOOLEAN)
+                .build();
+
+            // Bind the song to the row
             list_item
                 .bind_property("item", &row, "song")
                 .flags(glib::BindingFlags::DEFAULT)
                 .build();
 
+            // We use direct properties for the song details so we don't
+            // have to do complicated dances inside the QueueRow widget
+            // to retrieve the Song fields
             list_item
                 .property_expression("item")
                 .chain_property::<Song>("artist")
@@ -578,7 +654,7 @@ impl Window {
                 .property_expression("item")
                 .chain_property::<Song>("playing")
                 .bind(&row, "playing", gtk::Widget::NONE);
-        });
+        }));
         imp.queue_view
             .set_factory(Some(&factory.upcast::<gtk::ListItemFactory>()));
 
@@ -638,9 +714,10 @@ impl Window {
         if let Some(current) = queue.current_song_index() {
             let mut remaining_time = 0;
             for pos in 0..n_songs {
-                let song = queue.song_at(pos).unwrap();
-                if pos >= current {
-                    remaining_time += song.duration();
+                if let Some(song) = queue.song_at(pos) {
+                    if pos >= current {
+                        remaining_time += song.duration();
+                    }
                 }
             }
 
