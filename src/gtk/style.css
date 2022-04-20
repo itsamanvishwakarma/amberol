@@ -61,6 +61,14 @@ queuerow picture.cover {
   margin: 0px;
 }
 
+queuerow button.small {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 1px;
+  padding-right: 1px;
+  min-height: 18px;
+}
+
 dragoverlay {
   box-shadow: none;
 }

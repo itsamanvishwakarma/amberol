@@ -721,4 +721,14 @@ impl Window {
         let queue = self.imp().player.queue();
         queue.remove_song(song);
     }
+
+    pub fn move_song_up(&self, song: &Song) {
+        let queue = self.imp().player.queue();
+        queue.move_song_up(song);
+    }
+
+    pub fn move_song_down(&self, song: &Song) {
+        let queue = self.imp().player.queue();
+        queue.move_song_down(song);
+    }
 }

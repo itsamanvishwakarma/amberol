@@ -177,6 +177,62 @@ impl Queue {
         self.notify("n-songs");
     }
 
+    fn get_song_position(&self, song: &Song) -> u32 {
+        let n_songs = self.n_songs();
+        for pos in 0..n_songs {
+            let s = self
+                .imp()
+                .store
+                .item(pos)
+                .unwrap()
+                .downcast::<Song>()
+                .unwrap();
+            if s.equals(&song) {
+                return pos;
+            }
+        }
+
+        0
+    }
+
+    pub fn move_song_up(&self, song: &Song) {
+        let pos = self.get_song_position(song);
+        if pos == 0 {
+            return;
+        }
+
+        if let Some(current) = self.imp().current_pos.get() {
+            if pos - 1 == current {
+                return;
+            }
+        }
+
+        let clone = song.clone();
+        self.remove_song(song);
+        self.imp().store.insert(pos - 1, &clone);
+
+        self.notify("n-songs");
+    }
+
+    pub fn move_song_down(&self, song: &Song) {
+        let pos = self.get_song_position(song);
+        if pos == self.n_songs() - 1 {
+            return;
+        }
+
+        if let Some(current) = self.imp().current_pos.get() {
+            if pos + 1 == current {
+                return;
+            }
+        }
+
+        let clone = song.clone();
+        self.remove_song(song);
+        self.imp().store.insert(pos + 1, &clone);
+
+        self.notify("n-songs");
+    }
+
     pub fn skip_song(&self, pos: u32) -> Option<Song> {
         self.imp().current_pos.replace(Some(pos));
         self.notify("current");

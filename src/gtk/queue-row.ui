@@ -67,12 +67,48 @@
                   </object>
                 </child>
                 <child type="end">
-                  <object class="GtkButton" id="remove_button">
-                    <property name="icon-name">user-trash-symbolic</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="tooltip_text" translatable="yes">Remove</property>
+                  <object class="GtkBox" id="controls_box">
+                    <property name="spacing">2</property>
                     <property name="visible">0</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkButton" id="move_up_button">
+                            <property name="icon-name">arrow-up-tiny-symbolic</property>
+                            <property name="tooltip_text" translatable="yes">Move up in the queue</property>
+                            <style>
+                              <class name="small"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="move_down_button">
+                            <property name="icon-name">arrow-down-tiny-symbolic</property>
+                            <property name="tooltip_text" translatable="yes">Move down in the queue</property>
+                            <style>
+                              <class name="small"/>
+                            </style>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="linked"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="remove_button">
+                        <property name="icon-name">user-trash-symbolic</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="tooltip_text" translatable="yes">Remove</property>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <style>

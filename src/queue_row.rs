@@ -30,6 +30,12 @@ mod imp {
         #[template_child]
         pub song_artist_label: TemplateChild<gtk::Label>,
         #[template_child]
+        pub controls_box: TemplateChild<gtk::Box>,
+        #[template_child]
+        pub move_up_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        pub move_down_button: TemplateChild<gtk::Button>,
+        #[template_child]
         pub remove_button: TemplateChild<gtk::Button>,
 
         pub song: RefCell<Option<Song>>,
@@ -168,7 +174,7 @@ impl QueueRow {
         let controller = gtk::EventControllerMotion::new();
         controller.set_name("queuerow motion");
         controller.connect_contains_pointer_notify(clone!(@strong self as this => move |c| {
-            this.imp().remove_button.set_visible(c.contains_pointer());
+            this.imp().controls_box.set_visible(c.contains_pointer());
         }));
         self.add_controller(&controller);
     }
@@ -188,6 +194,39 @@ impl QueueRow {
                     .unwrap();
                 if let Some(song) = this.song() {
                     win.remove_song(&song);
+                }
+            }));
+
+        self.imp()
+            .move_up_button
+            .connect_clicked(clone!(@strong self as this => move |_| {
+                let app = gio::Application::default()
+                    .expect("Failed to retrieve application singleton")
+                    .downcast::<gtk::Application>()
+                    .unwrap();
+                let win = app
+                    .active_window()
+                    .unwrap()
+                    .downcast::<Window>()
+                    .unwrap();
+                if let Some(song) = this.song() {
+                    win.move_song_up(&song);
+                }
+            }));
+        self.imp()
+            .move_down_button
+            .connect_clicked(clone!(@strong self as this => move |_| {
+                let app = gio::Application::default()
+                    .expect("Failed to retrieve application singleton")
+                    .downcast::<gtk::Application>()
+                    .unwrap();
+                let win = app
+                    .active_window()
+                    .unwrap()
+                    .downcast::<Window>()
+                    .unwrap();
+                if let Some(song) = this.song() {
+                    win.move_song_down(&song);
                 }
             }));
     }
