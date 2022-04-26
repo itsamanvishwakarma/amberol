@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project('amberol', 'rust',
-  version: '0.4.3',
+  version: '0.4.4',
   license: ['GPL-3.0'],
   meson_version: '>= 0.59.0',
   default_options: [ 'warning_level=2', ],
