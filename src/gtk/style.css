@@ -99,10 +99,11 @@ scrolledwindow undershoot.top {
 }
 
 .main-window {
-  background: linear-gradient(127deg, alpha(@background_color_0, .8), alpha(@background_color_0, 0) 70.71%),
-              linear-gradient(217deg, alpha(@background_color_1, .8), alpha(@background_color_1, 0) 70.71%),
-              linear-gradient(336deg, alpha(@background_color_2, .8), alpha(@background_color_2, 0) 70.71%);
-  color: @foreground_color;
+  background: linear-gradient(217deg, alpha(@background_color_0, .8), alpha(@background_color_0, 0) 70.71%),
+              linear-gradient(127deg, alpha(@background_color_1, .8), alpha(@background_color_1, 0) 70.71%),
+              linear-gradient(336deg, alpha(@background_color_2, .8), alpha(@background_color_2, 0) 70.71%)
+              center center / cover no-repeat;
+  color: @foreground_main_color;
   transition-property: background, color;
   transition-duration: 250ms;
   transition-timing-function: ease;
@@ -112,15 +113,16 @@ scrolledwindow undershoot.top {
  * is folded, as the flap background is transparent
  */
 .main-window .folded .playlist-background {
-  background: linear-gradient(127deg, alpha(@background_color_0, .8), alpha(@background_color_0, 0) 70.71%),
-              linear-gradient(217deg, alpha(@background_color_1, .8), alpha(@background_color_1, 0) 70.71%),
-              linear-gradient(336deg, alpha(@background_color_2, .8), alpha(@background_color_2, 0) 70.71%);
-  color: @foreground_color;
+  background: linear-gradient(217deg, alpha(@background_color_0, .8), alpha(@background_color_0, 0) 70.71%),
+              linear-gradient(127deg, alpha(@background_color_1, .8), alpha(@background_color_1, 0) 70.71%),
+              linear-gradient(336deg, alpha(@background_color_2, .8), alpha(@background_color_2, 0) 70.71%)
+              center center / cover no-repeat;
+  color: @foreground_playlist_color;
 }
 
 .main-window .unfolded .darken {
   background-color: rgba(0, 0, 0, 0.08);
-  color: @foreground_color;
+  color: @foreground_main_color;
 }
 
 /* Reset the background of the playlist flap if there's no cover art */
@@ -136,7 +138,7 @@ scrolledwindow undershoot.top {
 .main-window popover arrow,
 .main-window popover contents {
   background-color: shade(@background_color_0, 1.2);
-  color: @foreground_color;
+  color: @foreground_main_color;
 }
 
 .main-window button:focus,
