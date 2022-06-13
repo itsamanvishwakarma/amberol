@@ -53,10 +53,9 @@
             <property name="margin-start">6</property>
             <property name="margin-end">6</property>
             <child>
-              <object class="GtkLabel" id="song_title_label">
+              <object class="MarqueeLabel" id="song_title_label">
                 <property name="xalign">0.5</property>
-                <property name="ellipsize">end</property>
-                <property name="width-chars">20</property>
+                <property name="min-chars">20</property>
                 <style>
                   <class name="song-title"/>
                 </style>

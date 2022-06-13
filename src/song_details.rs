@@ -4,7 +4,7 @@
 use adw::subclass::prelude::*;
 use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 
-use crate::cover_picture::CoverPicture;
+use crate::{cover_picture::CoverPicture, marquee_label::MarqueeLabel};
 
 mod imp {
     use super::*;
@@ -14,7 +14,7 @@ mod imp {
     pub struct SongDetails {
         // Template widgets
         #[template_child]
-        pub song_title_label: TemplateChild<gtk::Label>,
+        pub song_title_label: TemplateChild<MarqueeLabel>,
         #[template_child]
         pub song_artist_label: TemplateChild<gtk::Label>,
         #[template_child]
@@ -41,6 +41,7 @@ mod imp {
 
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
             CoverPicture::static_type();
+            MarqueeLabel::static_type();
             obj.init_template();
         }
     }
@@ -76,7 +77,7 @@ impl SongDetails {
         self.imp().song_artist_label.get()
     }
 
-    pub fn title_label(&self) -> gtk::Label {
+    pub fn title_label(&self) -> MarqueeLabel {
         self.imp().song_title_label.get()
     }
 
