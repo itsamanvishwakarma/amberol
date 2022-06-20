@@ -128,6 +128,9 @@ mod imp {
                 debug!("Window::queue.clear()");
                 win.clear_queue();
             });
+            klass.install_action("queue.clear-cache", None, move |win, _, _| {
+                win.clear_queue_cache();
+            });
             klass.install_property_action("queue.toggle", "playlist-visible");
             klass.install_property_action("queue.shuffle", "playlist-shuffled");
             klass.install_property_action("queue.select", "playlist-selection");
@@ -323,6 +326,10 @@ impl Window {
 
     fn clear_queue(&self) {
         self.imp().player.clear_queue();
+    }
+
+    fn clear_queue_cache(&self) {
+        self.imp().player.drop_cover_art();
     }
 
     fn playlist_visible(&self) -> bool {
