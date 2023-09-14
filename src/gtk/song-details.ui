@@ -70,5 +70,11 @@
         <attribute name="action">win.copy</attribute>
       </item>
     </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Remove song</attribute>
+        <attribute name="action">win.remove-song</attribute>
+      </item>
+    </section>
   </menu>
 </interface>

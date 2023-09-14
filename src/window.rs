@@ -175,6 +175,10 @@ mod imp {
                 debug!("Window::win.copy()");
                 win.copy_song();
             });
+            klass.install_action("win.remove-song", None, move |win, _, _| {
+                debug!("Window::win.remove-song()");
+                win.remove_current_song();
+            });
             klass.install_action("queue.clear", None, move |win, _, _| {
                 debug!("Window::queue.clear()");
                 win.clear_queue();
@@ -1379,6 +1383,16 @@ impl Window {
                     &[("title", &song.title()), ("artist", &song.artist())],
                 );
                 self.clipboard().set_text(&s);
+            }
+        }
+    }
+
+    fn remove_current_song(&self) {
+        if let Some(player) = self.player() {
+            let state = player.state();
+            if let Some(song) = state.current_song() {
+                self.remove_song(&song);
+                utils::store_playlist(player.queue());
             }
         }
     }
