@@ -5,12 +5,14 @@
     <child>
       <object class="GtkBox">
         <property name="orientation">horizontal</property>
+        <property name="hexpand">true</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="orientation">vertical</property>
-            <property name="halign">center</property>
+            <property name="halign">start</property>
             <property name="valign">center</property>
+            <property name="hexpand">true</property>
             <property name="margin-start">6</property>
             <property name="margin-end">6</property>
             <child>
@@ -42,7 +44,31 @@
             </child>
           </object>
         </child>
+
+        <child>
+          <object class="GtkMenuButton" id="song_menu_button">
+            <property name="menu-model">song_menu</property>
+            <property name="icon-name">view-more-symbolic</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="tooltip-text" translatable="yes">Song Menu</property>
+            <style>
+              <class name="circular"/>
+            </style>
+            <accessibility>
+              <property name="label" translatable="yes" context="a11y">Song menu</property>
+            </accessibility>
+          </object>
+        </child>
       </object>
     </child>
   </template>
+  <menu id="song_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Copy</attribute>
+        <attribute name="action">win.copy</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>
