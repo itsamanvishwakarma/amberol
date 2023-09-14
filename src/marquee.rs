@@ -206,10 +206,13 @@ mod imp {
 
             snapshot.push_clip(&bounds);
 
-            snapshot.translate(&graphene::Point::new(
-                -(label_width + SPACING) * self.rotation_progress.get(),
-                0.0,
-            ));
+            // Avoid sub-pixel translations on non-HiDPI; text gets jittery
+            let mut node_x = -(label_width + SPACING) * self.rotation_progress.get();
+            if widget.scale_factor() == 1 {
+                node_x = node_x.floor();
+            }
+
+            snapshot.translate(&graphene::Point::new(node_x, 0.0));
 
             snapshot.append_node(&node);
             snapshot.translate(&graphene::Point::new(label_width + SPACING, 0.0));
