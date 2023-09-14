@@ -128,7 +128,7 @@ mod imp {
             });
             klass.install_action_async("queue.add-song", None, |win, _, _| async move {
                 debug!("Window::win.add-song()");
-                let filters = gio::ListStore::new(gtk::FileFilter::static_type());
+                let filters = gio::ListStore::new::<gtk::FileFilter>();
                 let filter = gtk::FileFilter::new();
                 gtk::FileFilter::set_name(&filter, Some(&i18n("Audio files")));
                 filter.add_mime_type("audio/*");
