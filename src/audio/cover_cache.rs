@@ -64,8 +64,8 @@ impl CoverCache {
         self.entries.get(uuid)
     }
 
-    fn load_cover_art(&self, tag: &lofty::Tag, path: Option<&Path>) -> Option<glib::Bytes> {
-        if let Some(picture) = tag.get_picture_type(lofty::PictureType::CoverFront) {
+    fn load_cover_art(&self, tag: &lofty::tag::Tag, path: Option<&Path>) -> Option<glib::Bytes> {
+        if let Some(picture) = tag.get_picture_type(lofty::picture::PictureType::CoverFront) {
             debug!("Found CoverFront");
             return Some(glib::Bytes::from(picture.data()));
         } else {
@@ -73,8 +73,10 @@ impl CoverCache {
             // and BandLogo types
             for picture in tag.pictures() {
                 let cover_art = match picture.pic_type() {
-                    lofty::PictureType::Other => Some(glib::Bytes::from(picture.data())),
-                    lofty::PictureType::BandLogo => Some(glib::Bytes::from(picture.data())),
+                    lofty::picture::PictureType::Other => Some(glib::Bytes::from(picture.data())),
+                    lofty::picture::PictureType::BandLogo => {
+                        Some(glib::Bytes::from(picture.data()))
+                    }
                     _ => None,
                 };
 
@@ -89,47 +91,57 @@ impl CoverCache {
         // to be in a hot cache; looking for a separate file will blow a bunch of
         // caches out of the water, which will slow down loading the song into the
         // playlist model
-        match path {
-            Some(p) => {
-                let ext_covers = vec!["Cover.jpg", "Cover.png", "cover.jpg", "cover.png"];
+        if let Some(p) = path {
+            let ext_cover_basename = vec!["Cover", "cover", "Folder", "folder"];
+            let ext_cover_ext = vec!["jpg", "png"];
 
-                for name in ext_covers {
-                    let mut cover_file = PathBuf::from(p);
-                    cover_file.push(name);
-                    debug!("Looking for external cover file: {:?}", &cover_file);
+            let ext_covers = ext_cover_basename
+                .iter()
+                .map(|&b| {
+                    ext_cover_ext
+                        .iter()
+                        .map(move |&e| format!("{}.{}", &b, &e))
+                        .collect::<Vec<_>>()
+                })
+                .fold(vec![], |mut v, mut dat| {
+                    v.append(&mut dat);
+                    v
+                });
+            for name in ext_covers {
+                let mut cover_file = PathBuf::from(p);
+                cover_file.push(name);
+                debug!("Looking for external cover file: {:?}", &cover_file);
 
-                    let f = gio::File::for_path(&cover_file);
-                    if let Ok((res, _)) = f.load_bytes(None::<&gio::Cancellable>) {
-                        debug!("Loading cover from external cover file");
-                        return Some(res);
-                    }
+                let f = gio::File::for_path(&cover_file);
+                if let Ok((res, _)) = f.load_bytes(None::<&gio::Cancellable>) {
+                    debug!("Loading cover from external cover file");
+                    return Some(res);
                 }
             }
-            None => (),
-        };
+        }
 
         debug!("No cover art");
 
         None
     }
 
-    pub fn cover_art(&mut self, path: &Path, tag: &lofty::Tag) -> Option<(CoverArt, String)> {
+    pub fn cover_art(&mut self, path: &Path, tag: &lofty::tag::Tag) -> Option<(CoverArt, String)> {
         let mut album_artist = None;
         let mut track_artist = None;
         let mut album = None;
 
-        fn get_text_value(value: &lofty::ItemValue) -> Option<String> {
+        fn get_text_value(value: &lofty::tag::ItemValue) -> Option<String> {
             match value {
-                lofty::ItemValue::Text(s) => Some(s.to_string()),
+                lofty::tag::ItemValue::Text(s) => Some(s.to_string()),
                 _ => None,
             }
         }
 
         for item in tag.items() {
             match item.key() {
-                lofty::ItemKey::AlbumTitle => album = get_text_value(item.value()),
-                lofty::ItemKey::AlbumArtist => album_artist = get_text_value(item.value()),
-                lofty::ItemKey::TrackArtist => track_artist = get_text_value(item.value()),
+                lofty::prelude::ItemKey::AlbumTitle => album = get_text_value(item.value()),
+                lofty::prelude::ItemKey::AlbumArtist => album_artist = get_text_value(item.value()),
+                lofty::prelude::ItemKey::TrackArtist => track_artist = get_text_value(item.value()),
                 _ => (),
             };
         }
@@ -176,13 +188,13 @@ impl CoverCache {
                 // Cache the pixel buffer, so that the MPRIS controller can
                 // reference it later
                 let cache_path = if let Some(ref pixbuf) = cover_pixbuf {
-                    utils::cache_cover_art(&uuid, &pixbuf)
+                    utils::cache_cover_art(&uuid, pixbuf)
                 } else {
                     None
                 };
 
                 // The texture we draw on screen
-                let texture = cover_pixbuf.as_ref().map(|p| gdk::Texture::for_pixbuf(&p));
+                let texture = cover_pixbuf.as_ref().map(gdk::Texture::for_pixbuf);
 
                 // The color palette we use for styling the UI
                 let palette = if let Some(ref pixbuf) = cover_pixbuf {
@@ -201,9 +213,9 @@ impl CoverCache {
 
                     self.add_entry(&uuid, res.clone());
 
-                    return Some((res, uuid));
+                    Some((res, uuid))
                 } else {
-                    return None;
+                    None
                 }
             }
         }

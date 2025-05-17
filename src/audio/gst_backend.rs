@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: 2022  Emmanuele Bassi
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-use glib::{clone, Sender};
+use async_channel::Sender;
+use glib::clone;
 use gst::prelude::*;
 use gtk::glib;
 use log::{debug, error, warn};
@@ -11,7 +12,7 @@ use crate::audio::{PlaybackAction, ReplayGainMode, SeekDirection};
 #[derive(Debug)]
 pub struct GstBackend {
     sender: Sender<PlaybackAction>,
-    gst_player: gst_player::Player,
+    gst_player: gst_play::Play,
     replaygain: Option<GstReplayGain>,
 }
 
@@ -19,6 +20,13 @@ pub struct GstBackend {
 pub struct GstReplayGain {
     rg_filter_bin: gst::Element,
     rg_volume: gst::Element,
+}
+
+fn send_update_position(sender: &Sender<PlaybackAction>, clock: gst::ClockTime, notify: bool) {
+    let pos = clock.seconds();
+    if let Err(e) = sender.send_blocking(PlaybackAction::UpdatePosition(pos, notify)) {
+        error!("Failed to send UpdatePosition({pos}): {e}");
+    }
 }
 
 impl GstReplayGain {
@@ -63,11 +71,8 @@ impl GstReplayGain {
 
 impl GstBackend {
     pub fn new(sender: Sender<PlaybackAction>) -> Self {
-        let dispatcher = gst_player::PlayerGMainContextSignalDispatcher::new(None);
-        let gst_player = gst_player::Player::new(
-            None::<gst_player::PlayerVideoRenderer>,
-            Some(dispatcher.upcast::<gst_player::PlayerSignalDispatcher>()),
-        );
+        let gst_player = gst_play::Play::default();
+
         gst_player.set_video_track_enabled(false);
 
         let mut config = gst_player.config();
@@ -86,47 +91,59 @@ impl GstBackend {
     }
 
     fn setup_signals(&self) {
-        self.gst_player.connect_warning(move |_, warn| {
-            warn!("GStreamer warning: {}", warn);
-        });
+        let bus = self.gst_player.message_bus();
+        bus.set_sync_handler(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_bus, msg| {
+                let Ok(play_msg) = gst_play::PlayMessage::parse(&msg) else {
+                    return gst::BusSyncReply::Drop;
+                };
 
-        self.gst_player
-            .connect_end_of_stream(clone!(@strong self.sender as sender => move |_| {
-                if let Err(e) = sender.send(PlaybackAction::PlayNext) {
-                    error!("Failed to send PlayNext: {e}");
-                }
-            }));
-
-        self.gst_player.connect_position_updated(
-            clone!(@strong self.sender as sender => move |_, clock| {
-                if let Some(clock) = clock {
-                    let pos = clock.seconds();
-                    if let Err(e) = sender.send(PlaybackAction::UpdatePosition(pos)) {
-                        error!("Failed to send UpdatePosition({pos}): {e}");
+                match play_msg {
+                    gst_play::PlayMessage::Error { error, .. } => {
+                        error!("GStreamer error: {}", error);
                     }
+                    gst_play::PlayMessage::Warning { error, .. } => {
+                        warn!("GStreamer warning: {}", error);
+                    }
+                    gst_play::PlayMessage::EndOfStream => {
+                        if let Err(e) = sender.send_blocking(PlaybackAction::PlayNext) {
+                            error!("Failed to send PlayNext: {e}");
+                        }
+                    }
+                    gst_play::PlayMessage::PositionUpdated { position } => {
+                        if let Some(position) = position {
+                            send_update_position(&sender, position, false);
+                        }
+                    }
+                    gst_play::PlayMessage::SeekDone => {
+                        // FIXME: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/7754
+                        if let Some(position) = msg.structure().unwrap().get("position").unwrap() {
+                            send_update_position(&sender, position, true);
+                        }
+                    }
+                    gst_play::PlayMessage::VolumeChanged { volume } => {
+                        let volume = gst_audio::StreamVolume::convert_volume(
+                            gst_audio::StreamVolumeFormat::Linear,
+                            gst_audio::StreamVolumeFormat::Cubic,
+                            volume,
+                        );
+                        if let Err(e) = sender.send_blocking(PlaybackAction::VolumeChanged(volume))
+                        {
+                            error!("Failed to send VolumeChanged({volume}): {e}");
+                        }
+                    }
+                    _ => {}
                 }
-            }),
-        );
 
-        self.gst_player.connect_volume_changed(
-            clone!(@strong self.sender as sender => move |player| {
-                let volume = gst_audio::StreamVolume::convert_volume(
-                    gst_audio::StreamVolumeFormat::Linear,
-                    gst_audio::StreamVolumeFormat::Cubic,
-                    player.volume(),
-                );
-                if let Err(e) = sender.send(PlaybackAction::VolumeChanged(volume)) {
-                    error!("Failed to send VolumeChanged({volume}): {e}");
-                }
-            }),
-        );
+                gst::BusSyncReply::Drop
+            }
+        ));
     }
 
     pub fn set_song_uri(&self, uri: Option<&str>) {
-        // FIXME: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/1124
-        if uri.is_some() {
-            self.gst_player.set_uri(uri);
-        }
+        self.gst_player.set_uri(uri);
     }
 
     pub fn seek(&self, position: u64, duration: u64, offset: u64, direction: SeekDirection) {
@@ -182,9 +199,9 @@ impl GstBackend {
     }
 
     pub fn set_replaygain(&self, replaygain: ReplayGainMode) {
-        self.replaygain
-            .as_ref()
-            .map(|r| r.set_mode(self.gst_player.pipeline(), replaygain));
+        if let Some(ref r) = self.replaygain {
+            r.set_mode(self.gst_player.pipeline(), replaygain);
+        }
     }
 
     pub fn replaygain_available(&self) -> bool {

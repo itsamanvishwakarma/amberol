@@ -2,13 +2,74 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [unreleased]
 
 ### Added
 
 ### Changed
 
 ### Fixed
+
+### Removed
+
+## [2025.1] - 2025-03-30
+
+### Added
+
+- Add Malayalam translation
+- Add Slovak translation
+
+### Changed
+
+- Update dependencies [!176]
+- Documentation fixes [!174]
+- Require GTK 4.16 [!173]
+- Translation updates
+
+### Fixed
+
+- Clear the cover cache alongside the queue
+
+## [2024.2] - 2024-10-25
+
+### Added
+
+- Use folder.* filenames for cover art [#395]
+- Use `XDG_MUSIC_DIR` as the initial folder when adding songs [#373]
+
+### Changed
+
+- Replaced unmaintained mpris-player crate with mpris-server [!150]
+- Replaced deprecated gsteamer-player with gstreamer-play [!152]
+- Translation updates
+
+### Fixed
+
+- UI and CSS cleanups and improvements [!167]
+- Rename the appdata file [#279]
+
+## [2024.1] - 2024-09-21
+
+### Added
+
+- Add a marquee label for song details [!143]
+- Add more accessibility labels and descriptions
+- Add Romanian translation
+- Add Burmese translation
+- Add Norwegian Bokmål translation
+- Add Hindi translation
+
+### Changed
+
+- Adjust whitespace for DnD overlay [!153]
+- Port to the new libadwaita widgets [!138]
+- Update dependencies [!144, !155, !160]
+- Translation updates
+
+### Fixed
+
+- Support higher scaling factors in the cover image [#344]
+- Update application metadata [!145, !157, !164]
 
 ### Removed
 

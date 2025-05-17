@@ -17,7 +17,7 @@ don't use the issue tracker for support questions. Feel free to use the
 
 ## How to report bugs
 
-Issues should only be reported [on the project page](https://gitlab.gnome.org/Amberol/issues/).
+Issues should only be reported [on the project page](https://gitlab.gnome.org/World/Amberol/issues/).
 
 ### Bug reports
 
@@ -106,14 +106,15 @@ GNOME Builder will find all the dependencies and download them for you.
 ----
 
 If you want to use another development environment, you will need to clone
-the repository manually:
+the repository manually; make sure to have an account on GNOME's GitLab
+instance, and that you have an SSH key associated to that account:
 
 ```sh
-$ git clone git@gitlab.gnome.org:yourusername/amberol.git
+$ git clone git@ssh.gitlab.gnome.org:yourusername/amberol.git
 $ cd amberol
 ```
 
-To compile the Git version of GTK on your system, you will need to
+To compile the Git version of Amberol on your system, you will need to
 configure your build using Meson:
 
 ```sh
@@ -194,14 +195,14 @@ Closes #1234
  `git commit -a --author "Joe Coder <joe@coder.org>"` and `--signoff`.
 
  - If your commit is addressing an issue, use the
- [GitLab syntax](https://docs.gitlab.com/ce/user/project/issues/automatic_issue_closing.html)
+ [GitLab syntax](https://docs.gitlab.com/ce/user/project/issues/managing_issues.html#default-closing-pattern)
  to automatically close the issue when merging the commit with the upstream
  repository:
 
 ```plain
 Closes #1234
 Fixes #1234
-Closes: https://gitlab.gnome.org/GNOME/gtk/issues/1234
+Closes: https://gitlab.gnome.org/World/amberol/-/issues/123
 ```
 
  - If you have a merge request with multiple commits and none of them

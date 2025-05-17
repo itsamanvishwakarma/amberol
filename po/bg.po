@@ -1,444 +1,443 @@
-# Indonesian translation for amberol.
-# Copyright (C) 2022 amberol's COPYRIGHT HOLDER
+# Bulgarian translation of amberol po-file.
+# Copyright (C) 2024 amberol's COPYRIGHT HOLDER
 # This file is distributed under the same license as the amberol package.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2022-2023.
-# Andika Triwidada <andika@gmail.com>, 2022
-# Ega Natha <ega8642@gmail.com>, 2025.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: amberol main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/amberol/-/issues/\n"
-"POT-Creation-Date: 2024-09-24 12:08+0000\n"
-"PO-Revision-Date: 2025-03-15 17:21+0700\n"
-"Last-Translator: Ega Natha <ega8642@gmail.com>\n"
-"Language-Team: Indonesian\n"
-"Language: id\n"
+"POT-Creation-Date: 2024-10-12 00:23+0000\n"
+"PO-Revision-Date: 2024-10-13 08:06+0200\n"
+"Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
+"Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 47.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.1\n"
 
 #: data/io.bassi.Amberol.desktop.in.in:3
-#: data/io.bassi.Amberol.appdata.xml.in.in:6
+#: data/io.bassi.Amberol.metainfo.xml.in.in:6
 msgid "Amberol"
 msgstr "Amberol"
 
 #: data/io.bassi.Amberol.desktop.in.in:4
 msgid "Music Player"
-msgstr "Pemutar Musik"
+msgstr "Плеър за музика"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.bassi.Amberol.desktop.in.in:12
 msgid "music;player;media;audio;playlist;"
-msgstr "musik;pemutar;media;audio;daftar putar;"
+msgstr ""
+"музика;устройство;медия;звук;аудио;списък;песни;изпълнение;music;player;"
+"media;audio;playlist;"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:7
+#: data/io.bassi.Amberol.metainfo.xml.in.in:7
 msgid "Plays music, and nothing else"
-msgstr "Putar musik, dan tidak ada yang lain"
+msgstr "Просто слушане на музика"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:9
+#: data/io.bassi.Amberol.metainfo.xml.in.in:9
 msgid ""
 "Amberol is a music player with no delusions of grandeur. If you just want to "
 "play music available on your local system then Amberol is the music player "
 "you are looking for."
 msgstr ""
-"Amberol adalah pemutar musik tanpa delusi keagungan. Jika Anda hanya ingin "
-"memutar musik yang tersedia di sistem lokal Anda maka Amberol adalah pemutar "
-"musik yang Anda cari."
+"„Amberol“ е музикален плеър, което не се преструва на велик. Ако просто "
+"искате да слушате музика от локалната ви система, тогава „Amberol“ е "
+"музикалното програма, която търсите."
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:14
+#: data/io.bassi.Amberol.metainfo.xml.in.in:14
 msgid "Current features:"
-msgstr "Fitur saat ini:"
+msgstr "Функции:"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:16
+#: data/io.bassi.Amberol.metainfo.xml.in.in:16
 msgid "adaptive UI"
-msgstr "antarmuka adaptif"
+msgstr "адаптивен потребителски интерфейс"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:17
+#: data/io.bassi.Amberol.metainfo.xml.in.in:17
 msgid "UI recoloring using the album art"
-msgstr "Pewarnaan ulang antar muka menggunakan sampul album"
+msgstr ""
+"преоцветяване на потребителския интерфейс с помощта на обложката на албума"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:18
+#: data/io.bassi.Amberol.metainfo.xml.in.in:18
 msgid "drag and drop support to queue songs"
-msgstr "seret dan lepas dukungan untuk mengantrekan lagu"
+msgstr "изтегляне и пускане в опашката с песни"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:19
+#: data/io.bassi.Amberol.metainfo.xml.in.in:19
 msgid "shuffle and repeat"
-msgstr "acak dan ulangi"
+msgstr "разбъркване и повтаряне"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:20
+#: data/io.bassi.Amberol.metainfo.xml.in.in:20
 msgid "MPRIS integration"
-msgstr "Integrasi MPRIS"
+msgstr "Интеграция с MPRIS"
 
-#: data/io.bassi.Amberol.appdata.xml.in.in:48
+#: data/io.bassi.Amberol.metainfo.xml.in.in:48
 msgid "Emmanuele Bassi"
 msgstr "Emmanuele Bassi"
 
 #: src/audio/inhibit_controller.rs:40
 msgid "Playback in progress"
-msgstr "Pemutaran sedang berlangsung"
+msgstr "В момента се изпълнява музика"
 
 #: src/audio/song.rs:317
 msgid "Unknown artist"
-msgstr "Artis tak dikenal"
+msgstr "Неизвестен изпълнител"
 
 #: src/audio/song.rs:324
 msgid "Unknown title"
-msgstr "Judul tak dikenal"
+msgstr "Неизвестно заглавие"
 
 #: src/audio/song.rs:331
 msgid "Unknown album"
-msgstr "Album tak dikenal"
+msgstr "Неизвестен албум"
 
 #: src/gtk/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Umum"
+msgstr "Общи"
 
 #: src/gtk/help-overlay.ui:14
 msgctxt "shortcut window"
 msgid "Toggle primary menu"
-msgstr "Jungkitkan menu primer"
+msgstr "Превключване на основното меню"
 
 #: src/gtk/help-overlay.ui:20
 msgctxt "shortcut window"
 msgid "Copy song details to the clipboard"
-msgstr "Salin detail lagu ke papan klip"
+msgstr "Копиране на подробностите на песента в буфера за обмен"
 
 #: src/gtk/help-overlay.ui:26
 msgctxt "shortcut window"
 msgid "Show shortcuts"
-msgstr "Tampilkan pintasan"
+msgstr "Показване на клавишните комбинации"
 
 #: src/gtk/help-overlay.ui:32
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Keluar"
+msgstr "Спиране на програмата"
 
 #: src/gtk/help-overlay.ui:40
 msgctxt "shortcut window"
 msgid "Playlist"
-msgstr "Daftar Putar"
+msgstr "Списък с песни"
 
 #: src/gtk/help-overlay.ui:43
 msgctxt "shortcut window"
 msgid "Add a song to the playlist"
-msgstr "Tambahkan lagu ke daftar putar"
+msgstr "Добавяне на песен в списъка"
 
 #: src/gtk/help-overlay.ui:49
 msgctxt "shortcut window"
 msgid "Add a folder to the playlist"
-msgstr "Tambahkan folder ke daftar putar"
+msgstr "Добавяне на папка в списъка с песни"
 
 #: src/gtk/help-overlay.ui:55
 msgctxt "shortcut window"
 msgid "Clear the playlist"
-msgstr "Bersihkan daftar putar"
+msgstr "Изчистване на списъка с песни"
 
 #: src/gtk/help-overlay.ui:61
 msgctxt "shortcut window"
 msgid "Toggle the playlist pane"
-msgstr "Jungkitkan panel daftar putar"
+msgstr "Превключване на панела за списъка с песни"
 
 #: src/gtk/help-overlay.ui:67
 msgctxt "shortcut window"
 msgid "Toggle shuffling songs"
-msgstr "Jungkitkan mengacak lagu"
+msgstr "Превключване на разбъркване на песните"
 
 #: src/gtk/help-overlay.ui:75
 msgctxt "shortcut window"
 msgid "Playback"
-msgstr "Putar"
+msgstr "Възпроизвеждане"
 
 #: src/gtk/help-overlay.ui:78
 msgctxt "shortcut window"
 msgid "Toggle play/pause"
-msgstr "Jungkitkan putar/jeda"
+msgstr "Превключване на изпълняване/пауза"
 
 #: src/gtk/help-overlay.ui:84
 msgctxt "shortcut window"
 msgid "Previous song"
-msgstr "Lagu sebelumnya"
+msgstr "Предишна песен"
 
 #: src/gtk/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Next song"
-msgstr "Lagu berikutnya"
+msgstr "Следваща песен"
 
 #: src/gtk/help-overlay.ui:96
 msgctxt "shortcut window"
 msgid "Seek backwards in the current song"
-msgstr "Lewati ke belakang di lagu saat ini"
+msgstr "Търсене назад в текущата песен"
 
 #: src/gtk/help-overlay.ui:102
 msgctxt "shortcut window"
 msgid "Seek forward in the current song"
-msgstr "Lewati ke depan di lagu saat ini"
+msgstr "Търсене напред в текущата песен"
 
 #: src/gtk/playback-control.ui:21
 msgid "Play the Previous Song"
-msgstr "Putar Lagu Sebelumnya"
+msgstr "Изпълняване на предишната песен"
 
 #: src/gtk/playback-control.ui:26
 msgctxt "a11y"
 msgid "Skip backwards"
-msgstr "Lewati ke belakang"
+msgstr "Прескачане назад"
 
 #: src/gtk/playback-control.ui:35
 msgid "Toggle Play"
-msgstr "Jungkitkan Memutar"
+msgstr "Превключване на изпълняване"
 
 #: src/gtk/playback-control.ui:41
 msgctxt "a11y"
 msgid "Toggle play"
-msgstr "Jungkitkan Memutar"
+msgstr "Превключване на изпълняване"
 
 #: src/gtk/playback-control.ui:50
 msgid "Play the Next Song"
-msgstr "Putar Lagu Berikutnya"
+msgstr "Изпълняване на следващата песен"
 
 #: src/gtk/playback-control.ui:55
 msgctxt "a11y"
 msgid "Skip forward"
-msgstr "Lewati ke depan"
+msgstr "Прескачане напред"
 
 #: src/gtk/playback-control.ui:78
 msgid "Toggle Playlist"
-msgstr "Jungkitkan Daftar Putar"
+msgstr "Превключване на списъка с песни"
 
 #: src/gtk/playback-control.ui:83
 msgctxt "a11y"
 msgid "Toggle playlist"
-msgstr "Jungkitkan Daftar Putar"
+msgstr "Превключване на списъка с песни"
 
 #: src/gtk/playback-control.ui:92
 msgid "Shuffle the Playlist"
-msgstr "Acak Daftar Putar"
+msgstr "Разбъркване на списъка с песни"
 
 #: src/gtk/playback-control.ui:94
 msgctxt "a11y"
 msgid "Shuffle"
-msgstr "Acak"
+msgstr "Разбъркано"
 
 #: src/gtk/playback-control.ui:113 src/playback_control.rs:114
 msgid "Enable Repeat"
-msgstr "Aktifkan Pengulangan"
+msgstr "Включване на повтарянето"
 
 #: src/gtk/playback-control.ui:118
 msgctxt "a11y"
 msgid "Repeat"
-msgstr "Berulang"
+msgstr "Повтаряне"
 
 #: src/gtk/playback-control.ui:129
 msgid "Main Menu"
-msgstr "Menu Utama"
+msgstr "Основно меню"
 
 #: src/gtk/playback-control.ui:135
 msgctxt "a11y"
 msgid "Primary menu"
-msgstr "Menu primer"
+msgstr "Основно меню"
 
 #: src/gtk/playback-control.ui:151
 msgid "Copy"
-msgstr "Salin"
+msgstr "Копиране"
 
 #: src/gtk/playback-control.ui:157
 msgid "Add _Song"
-msgstr "Tambah _Lagu"
+msgstr "Добавяне на _песен"
 
 #: src/gtk/playback-control.ui:161
 msgid "Add _Folder"
-msgstr "Tambah _Folder"
+msgstr "Добавяне на _папка"
 
 #: src/gtk/playback-control.ui:165
 msgid "Clear"
-msgstr "Bersihkan"
+msgstr "Изчистване"
 
 #: src/gtk/playback-control.ui:171
 msgid "_Match Cover Art"
-msgstr "Cocokkan Sampul Albu_m"
+msgstr "_Преоцветяване спрямо обложката"
 
 #: src/gtk/playback-control.ui:175
 msgid "_Background Playback"
-msgstr "Pemutaran Latar _Belakang"
+msgstr "_Възпроизвеждане във фонов режим"
 
 #: src/gtk/playback-control.ui:181
 msgid "_ReplayGain"
-msgstr "_ReplayGain"
+msgstr "_Изравняване на усилването"
 
 #: src/gtk/playback-control.ui:183
 msgctxt "replaygain-menu"
 msgid "_Album"
-msgstr "_Album"
+msgstr "_Албум"
 
 #: src/gtk/playback-control.ui:188
 msgctxt "replaygain-menu"
 msgid "_Song"
-msgstr "_Lagu"
+msgstr "_Песен"
 
 #: src/gtk/playback-control.ui:193
 msgctxt "replaygain-menu"
 msgid "_Disabled"
-msgstr "_Dinonaktifkan"
+msgstr "_Изключено"
 
 #: src/gtk/playback-control.ui:201
 msgid "_Keyboard Shortcuts"
-msgstr "Pintasan Papan Ti_k"
+msgstr "_Клавишни комбинации"
 
 #: src/gtk/playback-control.ui:205
 msgid "_About Amberol"
-msgstr "Tent_ang Amberol"
+msgstr "_Относно „Amberol“"
 
 #: src/gtk/playback-control.ui:209
 msgid "_Quit"
-msgstr "_Keluar"
+msgstr "_Спиране на програмата"
 
-#: src/gtk/playlist-view.ui:17
+#: src/gtk/playlist-view.ui:14
 msgid "Search Songs in the Playlist"
-msgstr "Cari Lagu di Daftar Putar"
+msgstr "Търсене на песни в списъка с песни"
 
-#: src/gtk/playlist-view.ui:28
+#: src/gtk/playlist-view.ui:24
 msgid "Playlist"
-msgstr "Daftar Putar"
+msgstr "Списък с песни"
 
-#: src/gtk/playlist-view.ui:49
-msgid "Select Songs in the Playlist"
-msgstr "Pilih Lagu di Daftar Putar"
-
-#: src/gtk/playlist-view.ui:58
+#: src/gtk/playlist-view.ui:46
 msgid "Close the Playlist"
-msgstr "Tutup Daftar Putar"
+msgstr "Затваряне на списъка с песни"
 
-#: src/gtk/playlist-view.ui:67
+#: src/gtk/playlist-view.ui:54
+msgid "Select Songs in the Playlist"
+msgstr "Избиране на песни в списъка с песни"
+
+#: src/gtk/playlist-view.ui:63
 msgid "Search songs"
-msgstr "Cari lagu"
+msgstr "Търсене на песни"
 
-#: src/gtk/playlist-view.ui:70
+#: src/gtk/playlist-view.ui:66
 msgctxt "a11y"
 msgid "Search"
-msgstr "Cari"
+msgstr "Търсене"
 
-#: src/gtk/playlist-view.ui:71
+#: src/gtk/playlist-view.ui:67
 msgctxt "a11y"
 msgid "Type to search songs"
-msgstr "Ketik untuk mencari lagu"
+msgstr "Въведете, за да търсите песни"
 
-#: src/gtk/playlist-view.ui:117
+#: src/gtk/playlist-view.ui:113
 msgid "Select All Songs"
-msgstr "Pilih Semua Lagu"
+msgstr "Избиране на всички песни"
 
-#: src/gtk/playlist-view.ui:130
+#: src/gtk/playlist-view.ui:126
 msgid "Remove Selected Songs"
-msgstr "Hapus Lagu yang Dipilih"
+msgstr "Премахване на избраните песни"
 
 #: src/gtk/queue-row.ui:27
 msgctxt "a11y"
 msgid "No cover available"
-msgstr "Tidak ada sampul yang tersedia"
+msgstr "Няма налична обложка"
 
 #: src/gtk/queue-row.ui:84
 msgctxt "a11y"
 msgid "Currently playing"
-msgstr "Kini sedang diputar"
+msgstr "В момента слушате"
 
 #: src/gtk/window.ui:13
 msgid "Drop a song to add it to the playlist"
-msgstr "Jatuhkan lagu untuk menambahkannya ke daftar putar"
+msgstr "Добавете песен като я пуснете в списъка"
 
 #: src/gtk/window.ui:43
 msgid ""
 "Select a file or a folder, or drag files from your file manager to the "
 "application window to add songs to the playlist"
 msgstr ""
-"Pilih berkas atau folder, atau seret berkas dari pengelola berkas Anda ke "
-"jendela aplikasi untuk menambahkan lagu ke daftar putar"
+"Изберете файл или папка, или изтеглете файлове от файловия мениджър в "
+"прозореца на приложението, за да добавите песни в списъка"
 
 #: src/gtk/window.ui:52
 msgid "Restore Playlist"
-msgstr "Pulihkan Daftar Putar"
+msgstr "Възстановяване на списъка с песни"
 
 #: src/gtk/window.ui:62
 msgid "Add Folder"
-msgstr "Tambah Folder"
+msgstr "Добавяне на папка"
 
 #: src/gtk/window.ui:71
 msgid "Add Song"
-msgstr "Tambah Lagu"
+msgstr "Добавяне на песен"
 
 #: src/gtk/window.ui:148
 msgctxt "a11y"
 msgid "Elapsed time"
-msgstr "Waktu berlalu"
+msgstr "Изминало време"
 
 #: src/gtk/window.ui:160
 msgctxt "a11y"
 msgid "Remaining time"
-msgstr "Sisa waktu"
+msgstr "Оставащо време"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: src/application.rs:243
 msgid "translator-credits"
-msgstr ""
-"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2022-2023.\n"
-"Andika Triwidada <andika@gmail.com>, 2022."
+msgstr "twlvnn <kraft_werk@tutanota.com>"
 
 #: src/application.rs:255
 msgid "Amberol needs to run in the background to play music"
-msgstr "Amberol perlu berjalan di latar belakang untuk memutar musik"
+msgstr "„Amberol“ трябва да работи във фонов режим, за да възпроизвежда музика"
 
 #: src/cover_picture.rs:75
 msgid "Cover image"
-msgstr "Gambar sampul"
+msgstr "Обложка"
 
 #: src/playback_control.rs:118
 msgid "Repeat All Songs"
-msgstr "Ulangi Semua Lagu"
+msgstr "Повтаряне на всички песни"
 
 #: src/playback_control.rs:122
 msgid "Repeat the Current Song"
-msgstr "Ulangi Lagu Saat Ini"
+msgstr "Повтаряне на текущата песен"
 
 #: src/window.rs:145
 msgid "Audio files"
-msgstr "Berkas suara"
+msgstr "Песни"
 
 #: src/window.rs:150
 msgid "_Add Song"
-msgstr "T_ambah Lagu"
+msgstr "_Добавяне на песен"
 
 #: src/window.rs:153
 msgid "Open File"
-msgstr "Buka Berkas"
+msgstr "Отваряне на файл"
 
 #: src/window.rs:158 src/window.rs:174 src/window.rs:1462
 msgid "Unable to access files"
-msgstr "Tak bisa mengakses berkas"
+msgstr "Не може да се достъпят файлове"
 
 #: src/window.rs:167
 msgid "_Add Folder"
-msgstr "T_ambah Folder"
+msgstr "_Добавяне на папка"
 
 #: src/window.rs:169
 msgid "Open Folder"
-msgstr "Buka Folder"
+msgstr "Отваряне на папка"
 
 #: src/window.rs:488
 msgid "No available song found"
-msgstr "Tidak ada lagu yang tersedia"
+msgstr "Не е намерена налична песен"
 
 #: src/window.rs:549
 msgid "No songs found"
-msgstr "Tidak ada lagu yang ditemukan"
+msgstr "Няма намерени песни"
 
 #: src/window.rs:582
 msgid "Added a new song"
-msgstr "Menambahkan lagu baru"
+msgstr "Добавена е нова песен"
 
 #: src/window.rs:583
 msgid "Play"
-msgstr "Putar"
+msgstr "Изпълнение"
 
 #. Translators: the `{}` must be left unmodified;
 #. it will be expanded to the number of songs added
@@ -446,21 +445,24 @@ msgstr "Putar"
 #: src/window.rs:592
 msgid "Added one song"
 msgid_plural "Added {} songs"
-msgstr[0] "Menambahkan satu lagu"
+msgstr[0] "Добавена е една песен"
+msgstr[1] "Добавени са {} песни"
 
 #: src/window.rs:1222
 msgid "Unable to access dropped files"
-msgstr "Tak bisa mengakses berkas yang dijatuhkan"
+msgstr "Пуснатите файлове не може да се достъпят"
 
 #: src/window.rs:1316
 msgid "{} minute"
 msgid_plural "{} minutes"
-msgstr[0] "{} menit"
+msgstr[0] "{} минута"
+msgstr[1] "{} минути"
 
 #: src/window.rs:1327
 msgid "{hours} hour {minutes} remaining"
 msgid_plural "{hours} hours {minutes} remaining"
-msgstr[0] "{hours} jam {minutes} tersisa"
+msgstr[0] "остават {hours} час {minutes} минути"
+msgstr[1] "остават {hours} часа {minutes} минути"
 
 #. Translators: the '{}' must be left unmodified, and
 #. it will be replaced by the number of minutes remaining
@@ -468,85 +470,24 @@ msgstr[0] "{hours} jam {minutes} tersisa"
 #: src/window.rs:1337
 msgid "{} minute remaining"
 msgid_plural "{} minutes remaining"
-msgstr[0] "{} menit tersisa"
+msgstr[0] "остава {} минута"
+msgstr[1] "остават {} минути"
 
 #: src/window.rs:1441
 msgid "No song selected"
-msgstr "Tidak ada lagu yang dipilih"
+msgstr "Няма избрана песен"
 
 #. Translators: The '{}' must be left unmodified, and
 #. it is expanded to the number of songs selected
 #: src/window.rs:1446
 msgid "{} song selected"
 msgid_plural "{} songs selected"
-msgstr[0] "{} lagu dipilih"
+msgstr[0] "{} избрана песен"
+msgstr[1] "{} избрани песни"
 
 #. Translators: `{title}` and `{artist}` must be left
 #. untranslated; they will expand to the title and
 #. artist of the currently playing song, respectively
 #: src/window.rs:1502
 msgid "Currently playing “{title}” by “{artist}”"
-msgstr "Sedang memutar \"{title}\" oleh \"{artist}\""
-
-#~ msgid "_Cancel"
-#~ msgstr "_Batal"
-
-#~ msgid "Unable to access folders"
-#~ msgstr "Tak bisa mengakses folder"
-
-#~ msgid "_Track"
-#~ msgstr "_Trek"
-
-#~ msgid "_Off"
-#~ msgstr "_Matikan"
-
-#~ msgid "Repeat All Tracks"
-#~ msgstr "Ulangi Semua Trek"
-
-#~ msgid "Add File"
-#~ msgstr "Tambah Berkas"
-
-#~ msgid "Plays music and nothing else"
-#~ msgstr "Putar musik dan tak ada yang lain"
-
-#~ msgid "Amberol cannot run in the background"
-#~ msgstr "Amberol tidak dapat berjalan di latar belakang"
-
-#~ msgid "{} hour"
-#~ msgid_plural "{} hours"
-#~ msgstr[0] "{} jam"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Songs Queue"
-#~ msgstr "Antrean Lagu"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Queue a Song"
-#~ msgstr "Antrekan Lagu"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Queue a Folder"
-#~ msgstr "Antrekan Folder"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Clear"
-#~ msgstr "Bersihkan"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Previous Track"
-#~ msgstr "Trek Sebelumnya"
-
-#~ msgid "Playing next"
-#~ msgstr "Memutar berikutnya"
-
-#~ msgid "“{}” is not a supported audio file"
-#~ msgstr "\"{}\" bukan berkas audio yang didukung"
-
-#~ msgid "Unrecognized file type for “{}”"
-#~ msgstr "Jenis berkas yang tidak dikenal untuk \"{}\""
-
-#~ msgid "Choose a file"
-#~ msgstr "Pilih berkas"
-
-#~ msgid "Choose a folder"
-#~ msgstr "Pilih folder"
+msgstr "В момента слушате „{title}“ от {artist}"

@@ -5,7 +5,6 @@ use core::cmp::Ordering;
 use std::path::PathBuf;
 
 use color_thief::{get_palette, ColorFormat};
-use glib::clone;
 use gtk::{gdk, gio, glib, prelude::*};
 use log::{debug, warn};
 
@@ -82,10 +81,9 @@ pub fn cache_cover_art(uuid: &str, pixbuf: &gdk_pixbuf::Pixbuf) -> Option<PathBu
                 &[("tEXt::Software", "amberol")],
                 gio::Cancellable::NONE,
                 move |res| {
-                    match res {
-                        Err(e) => warn!("Unable to cache cover data: {}", e),
-                        _ => (),
-                    };
+                    if let Err(e) = res {
+                        warn!("Unable to cache cover data: {}", e);
+                    }
                 },
             );
         }
@@ -155,7 +153,7 @@ fn load_files_from_folder_internal(
     while let Some(info) = enumerator.next().and_then(|s| s.ok()) {
         let child = enumerator.child(&info);
         if recursive && info.file_type() == gio::FileType::Directory {
-            let mut res = load_files_from_folder_internal(&base, &child, recursive);
+            let mut res = load_files_from_folder_internal(base, &child, recursive);
             files.append(&mut res);
         } else if info.file_type() == gio::FileType::Regular {
             files.push(child.clone());
@@ -242,7 +240,7 @@ pub fn load_files_from_folder(folder: &gio::File, recursive: bool) -> Vec<gio::F
     res
 }
 
-async fn store_current_pls(queue: &Queue) {
+pub fn store_playlist(queue: &Queue) {
     let pls = glib::KeyFile::new();
     pls.set_string("playlist", "X-GNOME-Title", "Amberol's current playlist");
 
@@ -269,13 +267,6 @@ async fn store_current_pls(queue: &Queue) {
     }
 }
 
-pub fn store_playlist(queue: &Queue) {
-    let ctx = glib::MainContext::default();
-    ctx.spawn_local(clone!(@weak queue => async move {
-        store_current_pls(&queue).await
-    }));
-}
-
 pub fn load_cached_songs() -> Option<Vec<gio::File>> {
     let mut pls_cache = glib::user_cache_dir();
     pls_cache.push("amberol");
@@ -283,12 +274,9 @@ pub fn load_cached_songs() -> Option<Vec<gio::File>> {
     pls_cache.push("current.pls");
 
     let pls = glib::KeyFile::new();
-    match pls.load_from_file(&pls_cache, glib::KeyFileFlags::NONE) {
-        Err(e) => {
-            debug!("Unable to load current playlist: {e}");
-            return None;
-        }
-        Ok(_) => (),
+    if let Err(e) = pls.load_from_file(&pls_cache, glib::KeyFileFlags::NONE) {
+        debug!("Unable to load current playlist: {e}");
+        return None;
     }
 
     let n_entries: usize = match pls.int64("playlist", "NumberOfEntries") {

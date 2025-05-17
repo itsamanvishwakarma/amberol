@@ -2,17 +2,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 project('amberol', 'rust',
-  version: '0.10.4',
+  version: '2025.2',
   license: ['GPL-3.0'],
   meson_version: '>= 0.59.0',
   default_options: [ 'warning_level=2', ],
 )
 
-dependency('gtk4', version: '>= 4.11.3')
-dependency('libadwaita-1', version: '>= 1.4')
+dependency('gtk4', version: '>= 4.16.0')
+dependency('libadwaita-1', version: '>= 1.5')
 dependency('gstreamer-1.0', version: '>= 1.20')
 dependency('gstreamer-audio-1.0', version: '>= 1.20')
-dependency('gstreamer-player-1.0', version: '>= 1.20')
+dependency('gstreamer-play-1.0', version: '>= 1.20')
 dependency('gstreamer-plugins-base-1.0', version: '>= 1.20')
 dependency('gstreamer-plugins-bad-1.0', version: '>= 1.20')
 dependency('gstreamer-bad-audio-1.0', version: '>= 1.20')
@@ -60,6 +60,14 @@ if reuse.found()
     suite: ['lint'],
   )
 endif
+
+test('lint',
+  find_program('build-aux/checks.sh'),
+  args: ['--tap'],
+  protocol: 'tap',
+  workdir: meson.project_source_root(),
+  suite: ['lint'],
+)
 
 meson.add_dist_script(
   'build-aux/dist-vendor.sh',

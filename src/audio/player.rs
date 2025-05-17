@@ -7,7 +7,8 @@ use std::{
     rc::Rc,
 };
 
-use glib::{clone, Receiver, Sender};
+use async_channel::{Receiver, Sender};
+use glib::clone;
 use gtk::glib;
 use log::{debug, error};
 
@@ -27,40 +28,30 @@ pub enum PlaybackAction {
     SkipPrevious,
     SkipNext,
 
-    UpdatePosition(u64),
+    UpdatePosition(u64, bool),
     VolumeChanged(f64),
     Repeat(RepeatMode),
-    Seek(u64),
+    Seek(i64),
     PlayNext,
 
     Raise,
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Default)]
 pub enum PlaybackState {
+    #[default]
     Stopped,
     Playing,
     Paused,
 }
 
-impl Default for PlaybackState {
-    fn default() -> Self {
-        PlaybackState::Stopped
-    }
-}
-
-#[derive(Clone, Copy, Debug, glib::Enum, PartialEq)]
+#[derive(Clone, Copy, Debug, glib::Enum, PartialEq, Default)]
 #[enum_type(name = "AmberolRepeatMode")]
 pub enum RepeatMode {
+    #[default]
     Consecutive,
     RepeatAll,
     RepeatOne,
-}
-
-impl Default for RepeatMode {
-    fn default() -> Self {
-        RepeatMode::Consecutive
-    }
 }
 
 impl Display for RepeatMode {
@@ -135,7 +126,7 @@ impl fmt::Debug for AudioPlayer {
 
 impl AudioPlayer {
     pub fn new(app_sender: Sender<ApplicationAction>) -> Rc<Self> {
-        let (sender, r) = glib::MainContext::channel(glib::Priority::DEFAULT);
+        let (sender, r) = async_channel::unbounded();
         let receiver = RefCell::new(Some(r));
 
         let mut controllers: Vec<Box<dyn Controller>> = Vec::new();
@@ -171,10 +162,19 @@ impl AudioPlayer {
 
     fn setup_channel(self: Rc<Self>) {
         let receiver = self.receiver.borrow_mut().take().unwrap();
-        receiver.attach(
-            None,
-            clone!(@strong self as this => move |action| this.clone().process_action(action)),
-        );
+
+        glib::MainContext::default().spawn_local(clone!(
+            #[strong(rename_to = this)]
+            self,
+            async move {
+                use futures::prelude::*;
+
+                let mut receiver = std::pin::pin!(receiver);
+                while let Some(action) = receiver.next().await {
+                    this.process_action(action);
+                }
+            }
+        ));
     }
 
     fn process_action(&self, action: PlaybackAction) -> glib::ControlFlow {
@@ -184,12 +184,12 @@ impl AudioPlayer {
             PlaybackAction::Stop => self.set_playback_state(PlaybackState::Stopped),
             PlaybackAction::SkipPrevious => self.skip_previous(),
             PlaybackAction::SkipNext => self.skip_next(),
-            PlaybackAction::UpdatePosition(pos) => self.update_position(pos),
+            PlaybackAction::UpdatePosition(pos, notify) => self.update_position(pos, notify),
             PlaybackAction::VolumeChanged(vol) => self.update_volume(vol),
             PlaybackAction::PlayNext => self.play_next(),
             PlaybackAction::Raise => self.present(),
             PlaybackAction::Repeat(mode) => self.update_repeat_mode(mode),
-            PlaybackAction::Seek(pos) => self.seek_position_abs(pos),
+            PlaybackAction::Seek(offset) => self.seek_offset(offset),
             // _ => debug!("Received action {:?}", action),
         }
 
@@ -433,6 +433,15 @@ impl AudioPlayer {
         self.seek(10, SeekDirection::Forward);
     }
 
+    pub fn seek_offset(&self, offset: i64) {
+        let direction = if offset < 0 {
+            SeekDirection::Backwards
+        } else {
+            SeekDirection::Forward
+        };
+        self.seek(offset.unsigned_abs(), direction);
+    }
+
     pub fn seek_position_rel(&self, position: f64) {
         let duration = self.state.duration() as f64;
         let pos = (duration * position).clamp(0.0, duration);
@@ -460,11 +469,11 @@ impl AudioPlayer {
         self.state.set_current_song(song);
     }
 
-    fn update_position(&self, position: u64) {
+    fn update_position(&self, position: u64, notify: bool) {
         self.state.set_position(position);
 
         for c in &self.controllers {
-            c.set_position(position);
+            c.set_position(position, notify);
         }
     }
 
@@ -502,7 +511,7 @@ impl AudioPlayer {
     }
 
     fn present(&self) {
-        if let Err(e) = self.app_sender.send(ApplicationAction::Present) {
+        if let Err(e) = self.app_sender.send_blocking(ApplicationAction::Present) {
             error!("Unable to send Present: {e}");
         }
     }

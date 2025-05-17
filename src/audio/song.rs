@@ -10,7 +10,7 @@ use std::{
 
 use glib::{ParamSpec, ParamSpecBoolean, ParamSpecObject, ParamSpecString, ParamSpecUInt, Value};
 use gtk::{gdk, gio, glib, prelude::*, subclass::prelude::*};
-use lofty::{Accessor, TaggedFileExt};
+use lofty::prelude::{Accessor, TaggedFileExt};
 use log::{debug, warn};
 use once_cell::sync::Lazy;
 use sha2::{Digest, Sha256};
@@ -59,7 +59,7 @@ impl SongData {
 
     pub fn cover_texture(&self) -> Option<&gdk::Texture> {
         if let Some(cover) = &self.cover_art {
-            return Some(&cover.texture());
+            return Some(cover.texture());
         }
 
         None
@@ -67,7 +67,7 @@ impl SongData {
 
     pub fn cover_palette(&self) -> Option<&Vec<gdk::RGBA>> {
         if let Some(cover) = &self.cover_art {
-            return Some(&cover.palette());
+            return Some(cover.palette());
         }
 
         None
@@ -107,13 +107,10 @@ impl SongData {
             artist = tag.artist().map(|s| s.to_string());
             title = tag.title().map(|s| s.to_string());
             album = tag.album().map(|s| s.to_string());
-            match cover_cache.cover_art(&path, &tag) {
-                Some(res) => {
-                    cover_art = Some(res.0);
-                    cover_uuid = Some(res.1);
-                }
-                None => (),
-            };
+            if let Some(res) = cover_cache.cover_art(&path, tag) {
+                cover_art = Some(res.0);
+                cover_uuid = Some(res.1);
+            }
         } else {
             warn!("Unable to load primary tag for: {}", uri);
             for tag in tagged_file.tags() {
@@ -121,13 +118,10 @@ impl SongData {
                 artist = tag.artist().map(|s| s.to_string());
                 title = tag.title().map(|s| s.to_string());
                 album = tag.album().map(|s| s.to_string());
-                match cover_cache.cover_art(&path, &tag) {
-                    Some(res) => {
-                        cover_art = Some(res.0);
-                        cover_uuid = Some(res.1);
-                    }
-                    None => (),
-                };
+                if let Some(res) = cover_cache.cover_art(&path, tag) {
+                    cover_art = Some(res.0);
+                    cover_uuid = Some(res.1);
+                }
 
                 if artist.is_some() && title.is_some() {
                     break;
@@ -143,16 +137,16 @@ impl SongData {
             Ok(info) => {
                 let mut hasher = Sha256::new();
 
-                hasher.update(&info.display_name().as_str());
+                hasher.update(info.display_name().as_str());
 
                 if let Some(ref artist) = artist {
-                    hasher.update(&artist);
+                    hasher.update(artist);
                 }
                 if let Some(ref title) = title {
-                    hasher.update(&title);
+                    hasher.update(title);
                 }
                 if let Some(ref album) = album {
-                    hasher.update(&album);
+                    hasher.update(album);
                 }
 
                 Some(format!("{:x}", hasher.finalize()))
@@ -160,7 +154,7 @@ impl SongData {
             _ => None,
         };
 
-        let properties = lofty::AudioFile::properties(&tagged_file);
+        let properties = lofty::prelude::AudioFile::properties(&tagged_file);
         let duration = properties.duration().as_secs();
 
         debug!(
@@ -289,9 +283,7 @@ glib::wrapper! {
 
 impl Song {
     pub fn new(uri: &str) -> Self {
-        glib::Object::builder::<Self>()
-            .property("uri", &uri)
-            .build()
+        glib::Object::builder::<Self>().property("uri", uri).build()
     }
 
     pub fn from_uri(uri: &str) -> Result<Song, &'static str> {

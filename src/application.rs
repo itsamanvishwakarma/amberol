@@ -3,10 +3,12 @@
 
 use std::{cell::RefCell, rc::Rc};
 
+use adw::prelude::AdwDialogExt;
 use adw::subclass::prelude::*;
 #[cfg(any(target_os = "linux", target_os = "freebsd"))]
 use ashpd::{desktop::background::Background, WindowIdentifier};
-use glib::{clone, Receiver};
+use async_channel::Receiver;
+use glib::clone;
 use gtk::{gio, glib, prelude::*};
 use log::{debug, warn};
 
@@ -29,7 +31,7 @@ mod imp {
     pub struct Application {
         pub player: Rc<AudioPlayer>,
         pub receiver: RefCell<Option<Receiver<ApplicationAction>>>,
-        pub background_hold: RefCell<Option<ApplicationHoldGuard>>,
+        pub background_hold: RefCell<Option<gio::ApplicationHoldGuard>>,
         pub settings: gio::Settings,
     }
 
@@ -40,7 +42,7 @@ mod imp {
         type ParentType = adw::Application;
 
         fn new() -> Self {
-            let (sender, r) = glib::MainContext::channel(glib::Priority::DEFAULT);
+            let (sender, r) = async_channel::unbounded();
             let receiver = RefCell::new(Some(r));
 
             Self {
@@ -116,9 +118,9 @@ glib::wrapper! {
 impl Default for Application {
     fn default() -> Self {
         glib::Object::builder::<Application>()
-            .property("application-id", &APPLICATION_ID)
+            .property("application-id", APPLICATION_ID)
             .property("flags", gio::ApplicationFlags::HANDLES_OPEN)
-            .property("resource-base-path", &"/io/bassi/Amberol")
+            .property("resource-base-path", "/io/bassi/Amberol")
             .build()
     }
 }
@@ -135,16 +137,20 @@ impl Application {
     fn setup_settings(&self) {
         self.imp().settings.connect_changed(
             Some("background-play"),
-            clone!(@weak self as this => move |settings, _| {
-                let background_play = settings.boolean("background-play");
-                debug!("GSettings:background-play: {background_play}");
-                if background_play {
-                    this.request_background();
-                } else {
-                    debug!("Dropping background hold");
-                    this.imp().background_hold.replace(None);
+            clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |settings, _| {
+                    let background_play = settings.boolean("background-play");
+                    debug!("GSettings:background-play: {background_play}");
+                    if background_play {
+                        this.request_background();
+                    } else {
+                        debug!("Dropping background hold");
+                        this.imp().background_hold.replace(None);
+                    }
                 }
-            }),
+            ),
         );
 
         let _dummy = self.imp().settings.boolean("background-play");
@@ -152,10 +158,19 @@ impl Application {
 
     fn setup_channel(&self) {
         let receiver = self.imp().receiver.borrow_mut().take().unwrap();
-        receiver.attach(
-            None,
-            clone!(@strong self as this => move |action| this.process_action(action)),
-        );
+        glib::MainContext::default().spawn_local(clone!(
+            #[strong(rename_to = this)]
+            self,
+            async move {
+                use futures::prelude::*;
+
+                let mut receiver = std::pin::pin!(receiver);
+
+                while let Some(action) = receiver.next().await {
+                    this.process_action(action);
+                }
+            }
+        ));
     }
 
     fn process_action(&self, action: ApplicationAction) -> glib::ControlFlow {
@@ -214,8 +229,7 @@ impl Application {
 
     fn show_about(&self) {
         let window = self.active_window().unwrap();
-        let dialog = adw::AboutWindow::builder()
-            .transient_for(&window)
+        let dialog = adw::AboutDialog::builder()
             .application_icon(APPLICATION_ID)
             .application_name("Amberol")
             .developer_name("Emmanuele Bassi")
@@ -226,10 +240,10 @@ impl Application {
             .issue_url("https://gitlab.gnome.org/World/amberol/-/issues/new")
             .license_type(gtk::License::Gpl30)
             // Translators: Replace "translator-credits" with your names, one name per line
-            .translator_credits(&i18n("translator-credits"))
+            .translator_credits(i18n("translator-credits"))
             .build();
 
-        dialog.present();
+        dialog.present(Some(&window));
     }
 
     #[cfg(any(target_os = "linux", target_os = "freebsd"))]
@@ -262,9 +276,11 @@ impl Application {
         let background_play = self.imp().settings.boolean("background-play");
         if background_play {
             let ctx = glib::MainContext::default();
-            ctx.spawn_local(clone!(@weak self as app => async move {
-                app.portal_request_background().await
-            }));
+            ctx.spawn_local(clone!(
+                #[weak(rename_to = app)]
+                self,
+                async move { app.portal_request_background().await }
+            ));
         }
     }
 

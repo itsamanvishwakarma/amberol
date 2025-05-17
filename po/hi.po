@@ -1,22 +1,22 @@
-# Greek translation for amberol.
-# Copyright (C) 2022 amberol's COPYRIGHT HOLDER
+# Hindi translation for amberol.
+# Copyright (C) 2024 amberol's COPYRIGHT HOLDER
 # This file is distributed under the same license as the amberol package.
-# Efstathios Iosifidis <eiosifidis@gnome.org>, 2022.
+# Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: amberol main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/amberol/issues\n"
-"POT-Creation-Date: 2024-01-05 14:52+0000\n"
-"PO-Revision-Date: 2024-01-05 22:02+0200\n"
-"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
-"Language-Team: Greek <gnome-el-list@gnome.org>\n"
-"Language: el\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/amberol/-/issues/\n"
+"POT-Creation-Date: 2024-03-25 22:32+0000\n"
+"PO-Revision-Date: 2024-03-29 12:37+0530\n"
+"Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
+"Language-Team: Hindi\n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 46.0\n"
 
 #: data/io.bassi.Amberol.desktop.in.in:3
 #: data/io.bassi.Amberol.appdata.xml.in.in:6
@@ -25,16 +25,16 @@ msgstr "Amberol"
 
 #: data/io.bassi.Amberol.desktop.in.in:4
 msgid "Music Player"
-msgstr "Αναπαραγωγή μουσικής"
+msgstr "म्यूजिक प्लेयर"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.bassi.Amberol.desktop.in.in:12
 msgid "music;player;media;audio;playlist;"
-msgstr "μουσική;αναπαραγωγέας;μέσα;ήχος;λίστα αναπαραγωγής;"
+msgstr "music;player;media;audio;playlist;संगीत;प्लेयर;मीडिया;ऑडियो;प्लेलिस्ट;"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:7
 msgid "Plays music, and nothing else"
-msgstr "Αναπαραγωγή μουσικής, τίποτα άλλο"
+msgstr "संगीत बजाता है और कुछ नहीं"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:9
 msgid ""
@@ -42,379 +42,370 @@ msgid ""
 "play music available on your local system then Amberol is the music player "
 "you are looking for."
 msgstr ""
-"Το Amberol είναι ένας αναπαραγωγέας μουσικής χωρίς αυταπάτες και "
-"μεγαλοπρέπειες. Αν θέλετε απλά να ακούτε μουσική που είναι διαθέσιμη στο "
-"τοπικό σας σύστημα, τότε το Amberol είναι ο αναπαραγωγέας μουσικής που "
-"ψάχνετε."
+"Amberol एक म्यूजिक प्लेयर है जिसे भव्यता का कोई भ्रम नहीं है। यदि आप केवल अपने स्थानीय "
+"सिस्टम पर उपलब्ध संगीत चलाना चाहते हैं तो Amberol वह म्यूजिक प्लेयर है जिसे आप तलाश रहे हैं।"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:14
 msgid "Current features:"
-msgstr "Τρέχοντα χαρακτηριστικά:"
+msgstr "वर्तमान विशेषताएं:"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:16
 msgid "adaptive UI"
-msgstr "προσαρμοστικό UI"
+msgstr "अनुकूली UI"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:17
 msgid "UI recoloring using the album art"
-msgstr "αλλαγή χρωμάτων του UI χρησιμοποιώντας το εξώφυλλο του άλμπουμ"
+msgstr "एल्बम कला का उपयोग करके UI को फिर से रंगना"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:18
 msgid "drag and drop support to queue songs"
-msgstr "υποστήριξη drag and drop για ουρά τραγουδιών"
+msgstr "गानों को कतारबद्ध करने के लिए खींचें और छोड़ें"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:19
 msgid "shuffle and repeat"
-msgstr "τυχαία σειρά και επανάληψη"
+msgstr "फेरबदल करें और दोहराएं"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:20
 msgid "MPRIS integration"
-msgstr "Ενσωμάτωση MPRIS"
+msgstr "MPRIS एकीकरण"
 
 #: data/io.bassi.Amberol.appdata.xml.in.in:44
 msgid "Emmanuele Bassi"
-msgstr "Emmanuele Bassi"
+msgstr "इमैनुएल बस्सी"
 
 #: src/audio/inhibit_controller.rs:40
 msgid "Playback in progress"
-msgstr "Αναπαραγωγή σε εξέλιξη"
+msgstr "प्लेबैक प्रगति पर है"
 
 #: src/audio/song.rs:325
 msgid "Unknown artist"
-msgstr "Άγνωστος καλλιτέχνης"
+msgstr "अज्ञात कलाकार"
 
 #: src/audio/song.rs:332
 msgid "Unknown title"
-msgstr "Άγνωστος τίτλος"
+msgstr "अज्ञात शीर्षक"
 
 #: src/audio/song.rs:339
 msgid "Unknown album"
-msgstr "Άγνωστο άλμπουμ"
+msgstr "अज्ञात एल्बम"
 
 #: src/gtk/help-overlay.ui:11
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Γενικά"
+msgstr "जनरल"
 
 #: src/gtk/help-overlay.ui:14
 msgctxt "shortcut window"
 msgid "Toggle primary menu"
-msgstr "Εναλλαγή πρωτεύοντος μενού"
+msgstr "प्राथमिक मेनू टॉगल करें"
 
 #: src/gtk/help-overlay.ui:20
 msgctxt "shortcut window"
 msgid "Copy song details to the clipboard"
-msgstr "Αντιγραφή λεπτομερειών τραγουδιού στο πρόχειρο"
+msgstr "गाने के विवरण को क्लिपबोर्ड पर कॉपी करें"
 
 #: src/gtk/help-overlay.ui:26
 msgctxt "shortcut window"
 msgid "Show shortcuts"
-msgstr "Εμφάνιση συντομεύσεων"
+msgstr "शॉर्टकट दिखाएँ"
 
 #: src/gtk/help-overlay.ui:32
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Έξοδος"
+msgstr "छोड़ें"
 
 #: src/gtk/help-overlay.ui:40
 msgctxt "shortcut window"
 msgid "Playlist"
-msgstr "Λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट"
 
 #: src/gtk/help-overlay.ui:43
 msgctxt "shortcut window"
 msgid "Add a song to the playlist"
-msgstr "Προσθήκη τραγουδιού στη λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट में एक गाना जोड़ें"
 
 #: src/gtk/help-overlay.ui:49
 msgctxt "shortcut window"
 msgid "Add a folder to the playlist"
-msgstr "Προσθήκη φακέλου στη λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट में एक फ़ोल्डर जोड़ें"
 
 #: src/gtk/help-overlay.ui:55
 msgctxt "shortcut window"
 msgid "Clear the playlist"
-msgstr "Εκκαθάριση της λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट साफ़ करें"
 
 #: src/gtk/help-overlay.ui:61
 msgctxt "shortcut window"
 msgid "Toggle the playlist pane"
-msgstr "Εναλλαγή παραθύρου λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट फलक टॉगल करें"
 
 #: src/gtk/help-overlay.ui:67
 msgctxt "shortcut window"
 msgid "Toggle shuffling songs"
-msgstr "Εναλλαγή ανακάτεματος τραγουδιών"
+msgstr "गानो का फेरबदल टॉगल करें"
 
 #: src/gtk/help-overlay.ui:75
 msgctxt "shortcut window"
 msgid "Playback"
-msgstr "Αναπαραγωγή"
+msgstr "प्लेबैक"
 
 #: src/gtk/help-overlay.ui:78
 msgctxt "shortcut window"
 msgid "Toggle play/pause"
-msgstr "Εναλλαγή αναπαραγωγής/παύσης"
+msgstr "बजाएं/रोकें टॉगल करें"
 
 #: src/gtk/help-overlay.ui:84
 msgctxt "shortcut window"
 msgid "Previous song"
-msgstr "Προηγούμενο τραγούδι"
+msgstr "पिछला गाना"
 
 #: src/gtk/help-overlay.ui:90
 msgctxt "shortcut window"
 msgid "Next song"
-msgstr "Επόμενο τραγούδι"
+msgstr "अगला गाना"
 
 #: src/gtk/help-overlay.ui:96
 msgctxt "shortcut window"
 msgid "Seek backwards in the current song"
-msgstr "Αναζήτηση προς τα πίσω στο τρέχον τραγούδι"
+msgstr "मौजूदा गाने में पीछे की ओर खोजें"
 
 #: src/gtk/help-overlay.ui:102
 msgctxt "shortcut window"
 msgid "Seek forward in the current song"
-msgstr "Αναζήτηση προς τα εμπρός στο τρέχον τραγούδι"
+msgstr "मौजूदा गाने में आगे की ओर खोजें"
 
 #: src/gtk/playback-control.ui:21
 msgid "Play the Previous Song"
-msgstr "Αναπαραγωγή του προηγούμενου τραγουδιού"
+msgstr "पिछला गाना बजाएं"
 
 #: src/gtk/playback-control.ui:26
 msgctxt "a11y"
 msgid "Skip backwards"
-msgstr "Παράβλεψη προς τα πίσω"
+msgstr "पीछे जाएँ"
 
 #: src/gtk/playback-control.ui:35
 msgid "Toggle Play"
-msgstr "Εναλλαγή Αναπαραγωγής"
+msgstr "बजाना टॉगल करें"
 
 #: src/gtk/playback-control.ui:41
 msgctxt "a11y"
 msgid "Toggle play"
-msgstr "Εναλλαγή αναπαραγωγής"
+msgstr "बजाना टॉगल करें"
 
 #: src/gtk/playback-control.ui:50
 msgid "Play the Next Song"
-msgstr "Αναπαραγωγή επόμενου τραγουδιού"
+msgstr "अगला गाना बजाएं"
 
 #: src/gtk/playback-control.ui:55
 msgctxt "a11y"
 msgid "Skip forward"
-msgstr "Παράβλεψη προς τα εμπρός"
+msgstr "आगे जाएँ"
 
 #: src/gtk/playback-control.ui:78
 msgid "Toggle Playlist"
-msgstr "Εναλλαγή Λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट टॉगल करें"
 
 #: src/gtk/playback-control.ui:83
 msgctxt "a11y"
 msgid "Toggle playlist"
-msgstr "Εναλλαγή λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट टॉगल करें"
 
 #: src/gtk/playback-control.ui:92
 msgid "Shuffle the Playlist"
-msgstr "Ανακάτεμα της λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट में फेरबदल करें"
 
 #: src/gtk/playback-control.ui:94
 msgctxt "a11y"
 msgid "Shuffle"
-msgstr "Τυχαία σειρά"
+msgstr "फेरबदल"
 
 #: src/gtk/playback-control.ui:113 src/playback_control.rs:114
 msgid "Enable Repeat"
-msgstr "Ενεργοποίηση Επανάληψης"
+msgstr "दोहराना सक्षम करें"
 
 #: src/gtk/playback-control.ui:118
 msgctxt "a11y"
 msgid "Repeat"
-msgstr "Επανάληψη"
+msgstr "दोहराएं"
 
 #: src/gtk/playback-control.ui:129
 msgid "Main Menu"
-msgstr "Κυρίως μενού"
+msgstr "मुख्य मेन्यू"
 
 #: src/gtk/playback-control.ui:135
 msgctxt "a11y"
 msgid "Primary menu"
-msgstr "Κύριο μενού"
+msgstr "प्राथमिक मेन्यू"
 
 #: src/gtk/playback-control.ui:151
 msgid "Copy"
-msgstr "Αντιγραφή"
+msgstr "कॉपी"
 
 #: src/gtk/playback-control.ui:157
 msgid "Add _Song"
-msgstr "Προσθήκη _Τραγουδιού"
+msgstr "गाना जोड़ें (_S)"
 
 #: src/gtk/playback-control.ui:161
 msgid "Add _Folder"
-msgstr "Προσθήκη _Φακέλου"
+msgstr "फोल्डर जोड़ें (_F)"
 
 #: src/gtk/playback-control.ui:165
 msgid "Clear"
-msgstr "Εκκαθάριση"
+msgstr "साफ़"
 
 #: src/gtk/playback-control.ui:171
 msgid "_Match Cover Art"
-msgstr "_Ταιριάζει το Εξώφυλλο"
+msgstr "कवर कला का मिलान (_M)"
 
 #: src/gtk/playback-control.ui:175
 msgid "_Background Playback"
-msgstr "Αναπαραγωγή στο _Φόντο"
+msgstr "पृष्ठभूमि प्लेबैक (_B)"
 
 #: src/gtk/playback-control.ui:181
 msgid "_ReplayGain"
-msgstr "_ReplayGain"
+msgstr "रिप्लेगैन (_R)"
 
 #: src/gtk/playback-control.ui:183
 msgctxt "replaygain-menu"
 msgid "_Album"
-msgstr "Ά_λμπουμ"
+msgstr "एल्बम (_A)"
 
 #: src/gtk/playback-control.ui:188
 msgctxt "replaygain-menu"
 msgid "_Song"
-msgstr "_Τραγούδι"
+msgstr "गाना (_S)"
 
 #: src/gtk/playback-control.ui:193
 msgctxt "replaygain-menu"
 msgid "_Disabled"
-msgstr "_Απενεργοποιημένο"
+msgstr "अक्षम (_D)"
 
 #: src/gtk/playback-control.ui:201
 msgid "_Keyboard Shortcuts"
-msgstr "Συντομεύσεις _Πληκτρολογίου"
+msgstr "कीबोर्ड शॉर्टकट (_K)"
 
 #: src/gtk/playback-control.ui:205
 msgid "_About Amberol"
-msgstr "_Περί του Amberol"
+msgstr "Amberol के बारे में (_A)"
 
 #: src/gtk/playback-control.ui:209
 msgid "_Quit"
-msgstr "Έ_ξοδος"
+msgstr "छोड़ें (_Q)"
 
 #: src/gtk/playlist-view.ui:18
 msgid "Playlist"
-msgstr "Λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट"
 
 #: src/gtk/playlist-view.ui:49
 msgid "Search Songs in the Playlist"
-msgstr "Αναζήτηση τραγουδιών στη λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट में गाने खोजें"
 
 #: src/gtk/playlist-view.ui:61
 msgid "Select Songs in the Playlist"
-msgstr "Επιλογή τραγουδιών στη λίστα αναπαραγωγής"
+msgstr "प्लेलिस्ट में गाने खोजें"
 
 #: src/gtk/playlist-view.ui:74
 msgid "Close the Playlist"
-msgstr "Κλείσιμο λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट बंद करें"
 
 #: src/gtk/playlist-view.ui:133
 msgid "Select All Songs"
-msgstr "Επιλογή όλων των τραγουδιών"
+msgstr "सभी गाने चुनें"
 
 #: src/gtk/playlist-view.ui:146
 msgid "Remove Selected Songs"
-msgstr "Αφαίρεση επιλεγμένων τραγουδιών"
+msgstr "चयनित गाने हटाएँ"
 
 #: src/gtk/window.ui:13
 msgid "Drop a song to add it to the playlist"
-msgstr "Αφήστε ένα τραγούδι για να το προσθέσετε στη λίστα αναπαραγωγής"
+msgstr "किसी गीत को प्लेलिस्ट में जोड़ने के लिए उसे छोड़ें"
 
 #: src/gtk/window.ui:43
 msgid ""
 "Select a file or a folder, or drag files from your file manager to the "
 "application window to add songs to the playlist"
 msgstr ""
-"Επιλέξτε ένα αρχείο ή έναν φάκελο, ή σύρετε αρχεία από τον διαχειριστή "
-"αρχείων σας στο παράθυρο της εφαρμογής για να προσθέσετε τραγούδια στην "
-"λίστα αναπαραγωγής"
+"किसी फ़ाइल या फ़ोल्डर का चयन करें, या प्लेलिस्ट में गाने जोड़ने के लिए फ़ाइलों को अपने फ़ाइल "
+"प्रबंधक से एप्लिकेशन विंडो पर खींचें"
 
 #: src/gtk/window.ui:52
 msgid "Restore Playlist"
-msgstr "Επαναφορά λίστας αναπαραγωγής"
+msgstr "प्लेलिस्ट पुनर्स्थापित करें"
 
 #: src/gtk/window.ui:62
 msgid "Add Folder"
-msgstr "Προσθήκη φακέλου"
+msgstr "फोल्डर जोड़ें"
 
 #: src/gtk/window.ui:71
 msgid "Add Song"
-msgstr "Προσθήκη Τραγουδιού"
+msgstr "गाना जोड़ें"
 
 #: src/gtk/window.ui:148
 msgctxt "a11y"
 msgid "Elapsed time"
-msgstr "Χρόνος που παρήλθε"
+msgstr "बीता समय"
 
 #: src/gtk/window.ui:160
 msgctxt "a11y"
 msgid "Remaining time"
-msgstr "Υπόλοιπος χρόνος"
+msgstr "शेष समय"
 
 #. Translators: Replace "translator-credits" with your names, one name per line
 #: src/application.rs:229
 msgid "translator-credits"
-msgstr ""
-"Ελληνική μεταφραστική ομάδα GNOME\n"
-" Ευστάθιος Ιωσηφίδης <iosifidis@opensuse.org>\n"
-"\n"
-"Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
-"http://gnome.gr/"
+msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>"
 
 #: src/application.rs:241
 msgid "Amberol needs to run in the background to play music"
-msgstr ""
-"Το Amberol χρειάζεται να εκτελείται στο παρασκήνιο για να αναπαράγει μουσική"
+msgstr "संगीत बजाने के लिए Amberol को पृष्ठभूमि में चलाने की आवश्यकता है"
 
 #: src/playback_control.rs:118
 msgid "Repeat All Songs"
-msgstr "Επανάληψη όλων των τραγουδιών"
+msgstr "सभी गाने दोहराएँ"
 
 #: src/playback_control.rs:122
 msgid "Repeat the Current Song"
-msgstr "Επανάληψη του τρέχοντος τραγουδιού"
+msgstr "वर्तमान गीत को दोहराएँ"
 
 #: src/window.rs:432
 msgid "Audio files"
-msgstr "Αρχεία ήχου"
+msgstr "ऑडियो फाइलें"
 
 #: src/window.rs:437
 msgid "_Add Song"
-msgstr "_Προσθήκη τραγουδιού"
+msgstr "गाना जोड़ें (_A)"
 
 #: src/window.rs:440
 msgid "Open File"
-msgstr "Άνοιγμα αρχείου"
+msgstr "फाइल खोलें"
 
 #: src/window.rs:445 src/window.rs:465 src/window.rs:1354
 msgid "Unable to access files"
-msgstr "Αδυναμία πρόσβασης στα αρχεία"
+msgstr "फ़ाइलों तक पहुंचने में असमर्थ"
 
 #: src/window.rs:457
 msgid "_Add Folder"
-msgstr "_Προσθήκη φακέλου"
+msgstr "फोल्डर जोड़ें (_A)"
 
 #: src/window.rs:459
 msgid "Open Folder"
-msgstr "Άνοιγμα φακέλου"
+msgstr "फोल्डर खोलें"
 
 #: src/window.rs:482
 msgid "No available song found"
-msgstr "Δεν βρέθηκαν διαθέσιμα τραγούδια"
+msgstr "कोई उपलब्ध गाना नहीं मिला"
 
 #: src/window.rs:537
 msgid "No songs found"
-msgstr "Δεν βρέθηκαν τραγούδια"
+msgstr "कोई गाना नहीं मिला"
 
 #: src/window.rs:567
 msgid "Added a new song"
-msgstr "Προστέθηκε νέο τραγούδι"
+msgstr "नया गाना जोड़ा गया"
 
 #: src/window.rs:568
 msgid "Play"
-msgstr "Aναπαραγωγή"
+msgstr "बजाएँ"
 
 #. Translators: the `{}` must be left unmodified;
 #. it will be expanded to the number of songs added
@@ -422,24 +413,24 @@ msgstr "Aναπαραγωγή"
 #: src/window.rs:577
 msgid "Added one song"
 msgid_plural "Added {} songs"
-msgstr[0] "Προστέθηκε ένα τραγούδι"
-msgstr[1] "Προστέθηκαν {} τραγούδια"
+msgstr[0] "एक गाना जोड़ा गया"
+msgstr[1] "{} गाने जोड़े गए"
 
 #: src/window.rs:1118
 msgid "Unable to access dropped files"
-msgstr "Αδυναμία πρόσβασης στα αρχεία που εναποτέθησαν"
+msgstr "गिराई गई फ़ाइलों तक पहुंचने में असमर्थ"
 
 #: src/window.rs:1212
 msgid "{} minute"
 msgid_plural "{} minutes"
-msgstr[0] "{} λεπτό"
-msgstr[1] "{} λεπτά"
+msgstr[0] "{} मिनट"
+msgstr[1] "{} मिनट"
 
 #: src/window.rs:1223
 msgid "{hours} hour {minutes} remaining"
 msgid_plural "{hours} hours {minutes} remaining"
-msgstr[0] "Απομένει {hours} ώρα και {minutes} λεπτά"
-msgstr[1] "Απομένουν {hours} ώρες και {minutes} λεπτά"
+msgstr[0] "{hours} घंटा {minutes} शेष"
+msgstr[1] "{hours} घंटे {minutes} शेष"
 
 #. Translators: the '{}' must be left unmodified, and
 #. it will be replaced by the number of minutes remaining
@@ -447,30 +438,24 @@ msgstr[1] "Απομένουν {hours} ώρες και {minutes} λεπτά"
 #: src/window.rs:1233
 msgid "{} minute remaining"
 msgid_plural "{} minutes remaining"
-msgstr[0] "Απομένει {} λεπτό"
-msgstr[1] "Απομένουν {} λεπτά"
+msgstr[0] "{} मिनट शेष"
+msgstr[1] "{} मिनट शेष"
 
 #: src/window.rs:1333
 msgid "No song selected"
-msgstr "Δεν επιλέχθηκε τραγούδι"
+msgstr "कोई गाना चयनित नहीं"
 
 #. Translators: The '{}' must be left unmodified, and
 #. it is expanded to the number of songs selected
 #: src/window.rs:1338
 msgid "{} song selected"
 msgid_plural "{} songs selected"
-msgstr[0] "{} τραγούδι επιλέχθηκε"
-msgstr[1] "{} τραγούδια επιλέχθηκαν"
+msgstr[0] "{} गीत चयनित"
+msgstr[1] "{} गाने चयनित"
 
 #. Translators: `{title}` and `{artist}` must be left
 #. untranslated; they will expand to the title and
 #. artist of the currently playing song, respectively
 #: src/window.rs:1392
 msgid "Currently playing “{title}” by “{artist}”"
-msgstr "Αυτή τη στιγμή παίζει το “{title}” από τον/την “{artist}”"
-
-#~ msgid "Add File"
-#~ msgstr "Προσθήκη αρχείου"
-
-#~ msgid "Repeat All Tracks"
-#~ msgstr "Επανάληψη όλων των κομματιών"
+msgstr "अभी \"{artist}\" द्वारा \"{title}\" बजाया जा रहा है"

@@ -100,7 +100,7 @@ impl Default for ShuffleListModel {
 impl ShuffleListModel {
     pub fn new(model: Option<&impl IsA<gio::ListModel>>) -> Self {
         glib::Object::builder::<Self>()
-            .property("model", &model.map(|m| m.as_ref()))
+            .property("model", model.map(|m| m.as_ref()))
             .build()
     }
 
@@ -111,8 +111,10 @@ impl ShuffleListModel {
     pub fn set_model(&self, model: Option<&gio::ListModel>) {
         if let Some(model) = model {
             self.imp().model.replace(Some(model.clone()));
-            model.connect_items_changed(
-                clone!(@strong self as this => move |_, position, removed, added| {
+            model.connect_items_changed(clone!(
+                #[strong(rename_to = this)]
+                self,
+                move |_, position, removed, added| {
                     if let Some(ref shuffle) = *this.imp().shuffle.borrow() {
                         if let Some(shuffled_pos) = shuffle.get(position as usize) {
                             this.items_changed(*shuffled_pos, removed, added);
@@ -121,8 +123,8 @@ impl ShuffleListModel {
                     }
 
                     this.items_changed(position, removed, added);
-                }),
-            );
+                }
+            ));
         } else {
             self.imp().model.replace(None);
         }
@@ -137,7 +139,7 @@ impl ShuffleListModel {
     pub fn reshuffle(&self, anchor: u32) {
         if let Some(ref model) = *self.imp().model.borrow() {
             let n_songs = model.n_items();
-            let mut rng = thread_rng();
+            let mut rng = rand::rng();
 
             let positions: Vec<u32> = if anchor == 0 {
                 let mut before: Vec<u32> = vec![0];

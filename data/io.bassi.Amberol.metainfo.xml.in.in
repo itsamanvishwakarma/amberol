@@ -20,8 +20,12 @@
       <li>MPRIS integration</li>
     </ul>
   </description>
+  <branding>
+    <color type="primary" scheme_preference="light">#90c0ff</color>
+    <color type="primary" scheme_preference="dark">#003681</color>
+  </branding>
   <screenshots>
-    <screenshot>
+    <screenshot type="default">
       <image>https://www.bassi.io/~ebassi/amberol/screenshots/0.10/amberol-full.png</image>
     </screenshot>
     <screenshot>
@@ -42,10 +46,12 @@
   <url type="vcs-browser">https://gitlab.gnome.org/World/amberol</url>
   <url type="translate">https://l10n.gnome.org/module/amberol/</url>
   <developer_name>Emmanuele Bassi</developer_name>
+  <developer id="io.bassi">
+    <name>Emmanuele Bassi</name>
+  </developer>
   <update_contact>ebassi_at_gnome.org</update_contact>
   <translation type="gettext">amberol</translation>
   <custom>
-    <value key="Purism::form_factor">workstation</value>
     <value key="Purism::form_factor">mobile</value>
   </custom>
   <requires>
@@ -57,6 +63,38 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="2025.1" date="2025-03-30">
+      <description>
+        <ul>
+          <li>Update the metadata parsing library</li>
+          <li>Release more resources when clearing the playlist</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2024.2" date="2024-10-25">
+      <description>
+        <ul>
+          <li>Check for more file names for external album covers</li>
+          <li>Update the MPRIS implementation for better conformance</li>
+          <li>Set the Music folder as the initial location when adding songs</li>
+          <li>Various style improvements</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2024.1" date="2024-09-21">
+      <description>
+        <p>New versioning scheme! Amberol has switched to a year/release version.</p>
+        <p>With the new GNOME release, we are now taking advantage of the new libadwaita UI elements and features.</p>
+        <p>If the song title, author, or album is too long, we now scroll their contents.</p>
+        <ul>
+          <li>Dependency updates for GTK, libadwaita, GStreamer, and lofty</li>
+          <li>Bug fixes</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.10.3" date="2023-05-23">
       <description>
         <p>Bug fixes and small UI improvements</p>

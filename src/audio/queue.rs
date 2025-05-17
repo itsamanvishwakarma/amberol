@@ -5,7 +5,7 @@ use std::cell::Cell;
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
-use crate::audio::{RepeatMode, ShuffleListModel, Song};
+use crate::audio::{CoverCache, RepeatMode, ShuffleListModel, Song};
 
 mod imp {
     use glib::{ParamSpec, ParamSpecEnum, ParamSpecObject, ParamSpecUInt, Value};
@@ -176,6 +176,9 @@ impl Queue {
     }
 
     pub fn clear(&self) {
+        let mut cover_cache = CoverCache::global().lock().unwrap();
+        cover_cache.clear();
+
         self.imp().current_pos.replace(None);
         self.imp().store.remove_all();
         self.notify("n-songs");
@@ -315,7 +318,7 @@ impl Queue {
     pub fn contains(&self, s: &Song) -> bool {
         for i in 0..self.imp().store.n_items() {
             let song = self.imp().store.item(i).unwrap();
-            if song.downcast_ref::<Song>().unwrap().equals(&s) {
+            if song.downcast_ref::<Song>().unwrap().equals(s) {
                 return true;
             }
         }
